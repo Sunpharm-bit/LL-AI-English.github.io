@@ -1370,6 +1370,22 @@
         const favoritesPracticeCount = document.getElementById('favorites-practice-count');
         const favoriteCategoryButtons = document.querySelectorAll('[data-favorite-category]');
         
+        // 文本预处理函数 - 中文文本清洗
+        function preprocessChineseText(text) {
+            if (!text) return '';
+            
+            let processedText = text;
+            // 处理中文文本中的特殊符号
+            processedText = processedText.replace(/\//g, ''); // 移除斜杠
+            processedText = processedText.replace(/:/g, ''); // 移除冒号
+            processedText = processedText.replace(/[()]/g, ''); // 移除括号
+            processedText = processedText.replace(/、/g, '，'); // 将顿号改为逗号
+            processedText = processedText.replace(/\s+/g, ' '); // 将多个空格替换为一个空格
+            processedText = processedText.trim(); // 去除首尾空格
+            
+            return processedText;
+        }
+        
         // 检查浏览器是否支持语音合成和语音识别
         function checkSpeechSupport() {
             isSpeechSupported = 'speechSynthesis' in window;
@@ -1555,37 +1571,61 @@
         // 从本地存储加载单词
         function loadWords() {
             const savedWords = localStorage.getItem('longlai-english-words');
+            
             if (savedWords) {
                 try {
                     words = JSON.parse(savedWords);
+                    console.log('从本地存储加载了', words.length, '个术语');
                     updateWordCount();
                     renderWordList();
                     renderFavoritesList();
                 } catch (e) {
                     console.error('加载单词数据失败:', e);
                     words = [];
+                    initializeDefaultWords();
                 }
             } else {
-                // 如果没有保存的单词，使用制药行业词汇
-                words = pharmaceuticalTerms.map(term => ({
-                    ...term,
-                    favorite: false,
-                    favoriteCategory: '',
-                    practiceCount: 0,
-                    correctPronunciations: 0,
-                    attemptedPronunciations: 0
-                }));
-                saveWords();
-                renderWordList();
-                renderFavoritesList();
+                console.log('本地存储为空，初始化默认数据');
+                initializeDefaultWords();
             }
+        }
+        
+        // 初始化默认单词数据
+        function initializeDefaultWords() {
+            // 使用制药行业词汇数据初始化
+            words = pharmaceuticalTerms.map(term => ({
+                english: term.english,
+                chinese: term.chinese,
+                category: term.category,
+                example: term.example || "",
+                difficulty: term.difficulty || "medium",
+                favorite: false, // 所有术语初始都不收藏
+                favoriteCategory: '',
+                practiceCount: 0,
+                correctPronunciations: 0,
+                attemptedPronunciations: 0
+            }));
+            
+            console.log('已初始化', words.length, '个默认术语');
+            
+            // 立即保存到本地存储
+            saveWords();
+            
+            // 立即渲染列表
+            renderWordList();
+            renderFavoritesList();
         }
         
         // 保存单词到本地存储
         function saveWords() {
-            localStorage.setItem('longlai-english-words', JSON.stringify(words));
-            updateWordCount();
-            showSaveNotification();
+            try {
+                localStorage.setItem('longlai-english-words', JSON.stringify(words));
+                updateWordCount();
+                showSaveNotification();
+            } catch (e) {
+                console.error('保存单词数据失败:', e);
+                alert('保存失败，可能是本地存储空间不足');
+            }
         }
         
         // 显示保存成功提示
@@ -1818,7 +1858,7 @@
                 
                 // 收藏分类标签
                 let favoriteCategoryBadge = '';
-                if (word.favoriteCategory) {
+                if (word.favorite && word.favoriteCategory) {
                     let categoryClass = '';
                     let categoryText = word.favoriteCategory;
                     
@@ -1830,7 +1870,7 @@
                         categoryClass = 'difficulty-easy';
                     }
                     
-                    favoriteCategoryBadge = `<span class="difficulty-indicator ${categoryClass}" style="margin-left: 5px;">${categoryText}</span>`;
+                    favoriteCategoryBadge = `<span class="difficulty-indicator ${categoryClass}" style="margin-left: 5px;">${word.favoriteCategory}</span>`;
                 }
                 
                 wordItem.innerHTML = `
@@ -2234,7 +2274,13 @@
             // 停止当前正在进行的语音
             speechSynthesis.cancel();
             
-            const utterance = new SpeechSynthesisUtterance(text);
+            // 预处理文本：如果是中文，处理特殊字符
+            let processedText = text;
+            if (lang.startsWith('zh')) {
+                processedText = preprocessChineseText(text);
+            }
+            
+            const utterance = new SpeechSynthesisUtterance(processedText);
             utterance.lang = lang;
             utterance.rate = rate;
             
@@ -2414,7 +2460,9 @@
                 utteranceEnglish.onend = function() {
                     // 等待1秒后说中文
                     setTimeout(() => {
-                        const utteranceChinese = new SpeechSynthesisUtterance(word.chinese);
+                        // 预处理中文文本
+                        const chineseText = preprocessChineseText(word.chinese);
+                        const utteranceChinese = new SpeechSynthesisUtterance(chineseText);
                         utteranceChinese.lang = 'zh-CN';
                         utteranceChinese.rate = 1.0;
                         
@@ -2513,7 +2561,9 @@
                 utteranceEnglish.onend = function() {
                     // 等待1.5秒后说中文
                     setTimeout(() => {
-                        const utteranceChinese = new SpeechSynthesisUtterance(word.chinese);
+                        // 预处理中文文本
+                        const chineseText = preprocessChineseText(word.chinese);
+                        const utteranceChinese = new SpeechSynthesisUtterance(chineseText);
                         utteranceChinese.lang = 'zh-CN';
                         utteranceChinese.rate = 1.0;
                         
@@ -2730,6 +2780,8 @@
         
         // 初始化应用
         function initApp() {
+            console.log('正在初始化隆莱英语助手...');
+            
             // 检查语音支持
             checkSpeechSupport();
             
