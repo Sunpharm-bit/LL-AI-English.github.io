@@ -487,6 +487,56 @@
         .save-notification.show {
             opacity: 1;
         }
+        
+        /* 兼容性警告 */
+        .compatibility-warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #856404;
+        }
+        
+        .compatibility-warning i {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+        
+        /* 禁用状态 */
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* 语音状态指示器 */
+        .voice-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .voice-status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #6c757d;
+        }
+        
+        .voice-status-indicator.active {
+            background-color: #28a745;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
     </style>
 </head>
 <body>
@@ -587,6 +637,11 @@
                             <!-- 语音选项将在这里动态生成 -->
                         </select>
                     </div>
+                    
+                    <div id="compatibility-info" class="compatibility-warning" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="compatibility-text"></span>
+                    </div>
                 </div>
             </div>
             
@@ -602,14 +657,19 @@
                         </div>
                     </div>
                     
+                    <div class="voice-status">
+                        <span id="voice-status-text">语音状态: 检测中...</span>
+                        <div id="voice-status-indicator" class="voice-status-indicator"></div>
+                    </div>
+                    
                     <div class="pronunciation-buttons">
-                        <button id="speak-english-btn" class="btn btn-primary pronunciation-btn">
+                        <button id="speak-english-btn" class="btn btn-primary pronunciation-btn" disabled>
                             <i class="fas fa-volume-up"></i> 听英语发音
                         </button>
-                        <button id="speak-chinese-btn" class="btn btn-primary pronunciation-btn">
+                        <button id="speak-chinese-btn" class="btn btn-primary pronunciation-btn" disabled>
                             <i class="fas fa-volume-up"></i> 听中文意思
                         </button>
-                        <button id="speak-slowly-btn" class="btn btn-success pronunciation-btn">
+                        <button id="speak-slowly-btn" class="btn btn-success pronunciation-btn" disabled>
                             <i class="fas fa-tachometer-alt"></i> 慢速发音
                         </button>
                         <button id="next-word-btn" class="btn btn-secondary pronunciation-btn">
@@ -625,6 +685,11 @@
                         <p>2. 尝试跟读，模仿AI的发音</p>
                         <p>3. 使用"慢速发音"功能学习难读的单词</p>
                         <p>4. 每天坚持学习10-15分钟效果最佳</p>
+                    </div>
+                    
+                    <div id="learn-compatibility-info" class="compatibility-warning" style="display: none; margin-top: 15px;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="learn-compatibility-text"></span>
                     </div>
                 </div>
             </div>
@@ -642,6 +707,9 @@
         let currentWordIndex = -1;
         let voices = [];
         let selectedVoice = null;
+        let isSpeechSupported = false;
+        let isChineseVoiceAvailable = false;
+        let isEnglishVoiceAvailable = false;
         
         // DOM元素
         const englishInput = document.getElementById('english-input');
@@ -662,6 +730,31 @@
         const tabContents = document.querySelectorAll('.tab-content');
         const saveNotification = document.getElementById('save-notification');
         const wordCountElement = document.getElementById('word-count');
+        const compatibilityInfo = document.getElementById('compatibility-info');
+        const compatibilityText = document.getElementById('compatibility-text');
+        const learnCompatibilityInfo = document.getElementById('learn-compatibility-info');
+        const learnCompatibilityText = document.getElementById('learn-compatibility-text');
+        const voiceStatusText = document.getElementById('voice-status-text');
+        const voiceStatusIndicator = document.getElementById('voice-status-indicator');
+        
+        // 检查浏览器是否支持语音合成
+        function checkSpeechSupport() {
+            isSpeechSupported = 'speechSynthesis' in window;
+            
+            if (!isSpeechSupported) {
+                voiceStatusText.textContent = "语音状态: 不支持";
+                voiceStatusIndicator.style.backgroundColor = "#dc3545";
+                compatibilityText.textContent = "您的浏览器不支持语音合成功能。请使用最新版的Chrome、Edge或Safari浏览器。";
+                compatibilityInfo.style.display = 'block';
+                learnCompatibilityText.textContent = "您的浏览器不支持语音合成功能，无法使用发音功能。";
+                learnCompatibilityInfo.style.display = 'block';
+                return false;
+            }
+            
+            voiceStatusText.textContent = "语音状态: 支持";
+            voiceStatusIndicator.style.backgroundColor = "#28a745";
+            return true;
+        }
         
         // 从本地存储加载单词
         function loadWords() {
@@ -827,6 +920,7 @@
                 if (currentWordIndex === index) {
                     currentWordIndex = -1;
                     clearCurrentWordDisplay();
+                    disableSpeechButtons();
                 } else if (currentWordIndex > index) {
                     currentWordIndex--;
                 }
@@ -854,6 +948,9 @@
             
             // 更新单词列表高亮
             renderWordList();
+            
+            // 启用发音按钮
+            enableSpeechButtons();
         }
         
         // 清空当前单词显示
@@ -864,6 +961,26 @@
                     <p>请在"列表"选项卡中选择一个单词开始学习</p>
                 </div>
             `;
+        }
+        
+        // 启用发音按钮
+        function enableSpeechButtons() {
+            if (isSpeechSupported) {
+                speakEnglishBtn.disabled = false;
+                speakChineseBtn.disabled = !isChineseVoiceAvailable;
+                speakSlowlyBtn.disabled = false;
+                
+                if (!isChineseVoiceAvailable) {
+                    speakChineseBtn.title = "当前没有可用的中文语音";
+                }
+            }
+        }
+        
+        // 禁用发音按钮
+        function disableSpeechButtons() {
+            speakEnglishBtn.disabled = true;
+            speakChineseBtn.disabled = true;
+            speakSlowlyBtn.disabled = true;
         }
         
         // 清空所有单词
@@ -879,6 +996,7 @@
                 renderWordList();
                 clearCurrentWordDisplay();
                 currentWordIndex = -1;
+                disableSpeechButtons();
             }
         }
         
@@ -899,9 +1017,9 @@
             }
         }
         
-        // 发音函数
+        // 发音函数 - 修复中文发音问题
         function speakText(text, lang, rate = 1.0) {
-            if (!('speechSynthesis' in window)) {
+            if (!isSpeechSupported) {
                 alert('您的浏览器不支持语音合成功能，请使用最新版的Chrome、Edge或Safari浏览器。');
                 return;
             }
@@ -913,28 +1031,58 @@
             utterance.lang = lang;
             utterance.rate = rate;
             
-            // 如果选择了特定语音，使用它
-            if (selectedVoice) {
+            // 根据语言选择合适的语音
+            if (lang.startsWith('zh')) {
+                // 中文发音：优先选择中文语音
+                const chineseVoice = voices.find(voice => voice.lang.startsWith('zh'));
+                if (chineseVoice) {
+                    utterance.voice = chineseVoice;
+                } else if (selectedVoice) {
+                    utterance.voice = selectedVoice;
+                }
+            } else if (lang.startsWith('en')) {
+                // 英文发音：优先选择英文语音
+                const englishVoice = voices.find(voice => voice.lang.startsWith('en'));
+                if (englishVoice) {
+                    utterance.voice = englishVoice;
+                } else if (selectedVoice) {
+                    utterance.voice = selectedVoice;
+                }
+            } else if (selectedVoice) {
                 utterance.voice = selectedVoice;
             }
             
             // 添加语音开始和结束的动画
             const speakingButtons = [speakEnglishBtn, speakChineseBtn, speakSlowlyBtn];
             speakingButtons.forEach(btn => {
-                if (btn) btn.classList.add('speaking');
+                if (btn) {
+                    btn.classList.add('speaking');
+                    voiceStatusIndicator.classList.add('active');
+                    voiceStatusText.textContent = "语音状态: 播放中...";
+                }
             });
             
             utterance.onend = function() {
                 speakingButtons.forEach(btn => {
                     if (btn) btn.classList.remove('speaking');
                 });
+                voiceStatusIndicator.classList.remove('active');
+                voiceStatusText.textContent = "语音状态: 就绪";
             };
             
-            utterance.onerror = function() {
+            utterance.onerror = function(event) {
+                console.error('语音合成错误:', event);
                 speakingButtons.forEach(btn => {
                     if (btn) btn.classList.remove('speaking');
                 });
-                alert('发音时出现错误，请确保您的浏览器支持语音合成功能。');
+                voiceStatusIndicator.classList.remove('active');
+                voiceStatusText.textContent = "语音状态: 错误";
+                
+                if (lang.startsWith('zh')) {
+                    alert('中文发音失败。这可能是因为：\n1. 浏览器不支持中文语音\n2. 未安装中文语音包\n3. 网络问题\n\n建议：使用最新版Chrome浏览器，并确保已安装中文语音包。');
+                } else {
+                    alert('发音失败，请检查语音设置或使用其他浏览器。');
+                }
             };
             
             speechSynthesis.speak(utterance);
@@ -955,6 +1103,11 @@
         function speakChinese() {
             if (currentWordIndex === -1) {
                 alert('请先选择一个单词！');
+                return;
+            }
+            
+            if (!isChineseVoiceAvailable) {
+                alert('当前没有可用的中文语音。请确保：\n1. 使用最新版Chrome或Edge浏览器\n2. 已安装中文语音包\n3. 或尝试使用电脑版浏览器');
                 return;
             }
             
@@ -980,6 +1133,11 @@
                 return;
             }
             
+            if (!isSpeechSupported) {
+                alert('您的浏览器不支持语音合成功能，无法使用练习功能。');
+                return;
+            }
+            
             let index = 0;
             
             function speakNextWord() {
@@ -996,7 +1154,11 @@
                 utteranceEnglish.lang = 'en-US';
                 utteranceEnglish.rate = 0.8;
                 
-                if (selectedVoice) {
+                // 选择英文语音
+                const englishVoice = voices.find(voice => voice.lang.startsWith('en'));
+                if (englishVoice) {
+                    utteranceEnglish.voice = englishVoice;
+                } else if (selectedVoice) {
                     utteranceEnglish.voice = selectedVoice;
                 }
                 
@@ -1007,7 +1169,11 @@
                         utteranceChinese.lang = 'zh-CN';
                         utteranceChinese.rate = 1.0;
                         
-                        if (selectedVoice) {
+                        // 选择中文语音
+                        const chineseVoice = voices.find(voice => voice.lang.startsWith('zh'));
+                        if (chineseVoice) {
+                            utteranceChinese.voice = chineseVoice;
+                        } else if (selectedVoice) {
                             utteranceChinese.voice = selectedVoice;
                         }
                         
@@ -1017,8 +1183,20 @@
                             setTimeout(speakNextWord, 2000);
                         };
                         
+                        utteranceChinese.onerror = function() {
+                            // 中文发音失败，继续下一个单词
+                            index++;
+                            setTimeout(speakNextWord, 2000);
+                        };
+                        
                         speechSynthesis.speak(utteranceChinese);
                     }, 1000);
+                };
+                
+                utteranceEnglish.onerror = function() {
+                    // 英文发音失败，继续下一个单词
+                    index++;
+                    setTimeout(speakNextWord, 2000);
                 };
                 
                 speechSynthesis.speak(utteranceEnglish);
@@ -1029,8 +1207,26 @@
         
         // 加载语音列表
         function loadVoices() {
+            if (!isSpeechSupported) return;
+            
             // 获取可用的语音列表
             voices = speechSynthesis.getVoices();
+            
+            // 检查是否有中文和英文语音
+            isChineseVoiceAvailable = voices.some(voice => voice.lang.startsWith('zh'));
+            isEnglishVoiceAvailable = voices.some(voice => voice.lang.startsWith('en'));
+            
+            // 更新兼容性信息
+            if (!isChineseVoiceAvailable) {
+                compatibilityText.textContent = "未检测到中文语音包，中文发音可能不可用。建议使用最新版Chrome浏览器，并安装中文语音包。";
+                compatibilityInfo.style.display = 'block';
+                
+                learnCompatibilityText.textContent = "中文发音可能不可用。建议使用电脑版Chrome浏览器，或安装中文语音包。";
+                learnCompatibilityInfo.style.display = 'block';
+            } else {
+                compatibilityInfo.style.display = 'none';
+                learnCompatibilityInfo.style.display = 'none';
+            }
             
             // 清空语音选择框
             voiceSelect.innerHTML = '';
@@ -1038,7 +1234,7 @@
             // 添加默认选项
             const defaultOption = document.createElement('option');
             defaultOption.value = '';
-            defaultOption.textContent = '使用默认语音';
+            defaultOption.textContent = '自动选择语音';
             voiceSelect.appendChild(defaultOption);
             
             // 添加所有可用的语音
@@ -1047,8 +1243,15 @@
                 option.value = index;
                 option.textContent = `${voice.name} (${voice.lang})`;
                 
-                // 默认选择英语语音
-                if (voice.lang.startsWith('en') || voice.name.includes('English')) {
+                // 标记中文和英文语音
+                if (voice.lang.startsWith('zh')) {
+                    option.textContent += ' [中文]';
+                } else if (voice.lang.startsWith('en')) {
+                    option.textContent += ' [英文]';
+                }
+                
+                // 默认选择英文语音
+                if (voice.lang.startsWith('en') && !selectedVoice) {
                     option.selected = true;
                     selectedVoice = voice;
                 }
@@ -1056,11 +1259,15 @@
                 voiceSelect.appendChild(option);
             });
             
-            // 如果没有英语语音，选择第一个可用的语音
+            // 如果没有英文语音，选择第一个可用的语音
             if (!selectedVoice && voices.length > 0) {
                 selectedVoice = voices[0];
                 voiceSelect.options[0].selected = true;
             }
+            
+            console.log('语音加载完成:', voices.length, '个语音可用');
+            console.log('中文语音可用:', isChineseVoiceAvailable);
+            console.log('英文语音可用:', isEnglishVoiceAvailable);
         }
         
         // 切换选项卡
@@ -1119,6 +1326,7 @@
             } else {
                 selectedVoice = voices[parseInt(this.value)];
             }
+            console.log('选择语音:', selectedVoice ? selectedVoice.name : '自动选择');
         });
         
         // 选项卡切换事件
@@ -1131,23 +1339,47 @@
         
         // 当语音列表加载完成时
         if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = loadVoices;
+            speechSynthesis.onvoiceschanged = function() {
+                loadVoices();
+                // 如果当前有选中的单词，重新启用发音按钮
+                if (currentWordIndex >= 0) {
+                    enableSpeechButtons();
+                }
+            };
         }
         
         // 初始化应用
         function initApp() {
+            // 检查语音支持
+            checkSpeechSupport();
+            
+            // 加载单词和语音
             loadWords();
-            loadVoices();
+            
+            // 加载语音列表（可能需要一些时间）
+            if (isSpeechSupported) {
+                // 立即尝试加载语音
+                loadVoices();
+                
+                // 如果语音列表为空，稍后再试（某些浏览器需要时间加载）
+                if (voices.length === 0) {
+                    setTimeout(loadVoices, 500);
+                }
+            }
             
             // 如果单词列表不为空，默认选择第一个单词
             if (words.length > 0) {
                 selectWord(0);
+            } else {
+                disableSpeechButtons();
             }
             
             // 添加触摸反馈效果
             document.querySelectorAll('button').forEach(button => {
                 button.addEventListener('touchstart', function() {
-                    this.style.transform = 'scale(0.98)';
+                    if (!this.disabled) {
+                        this.style.transform = 'scale(0.98)';
+                    }
                 });
                 
                 button.addEventListener('touchend', function() {
@@ -1156,6 +1388,7 @@
             });
             
             console.log('英语学习助手已初始化，已加载', words.length, '个单词');
+            console.log('语音合成支持:', isSpeechSupported);
         }
         
         // 页面加载完成后初始化应用
@@ -1167,6 +1400,13 @@
             setTimeout(() => {
                 document.activeElement.blur();
             }, 100);
+        });
+        
+        // 页面可见性变化时，停止语音
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                speechSynthesis.cancel();
+            }
         });
     </script>
 </body>
