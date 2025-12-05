@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>英语学习助手 - AI发音教学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4b6cb7;
+            --secondary-color: #182848;
+            --accent-color: #28a745;
+            --danger-color: #dc3545;
+            --light-color: #f5f7fa;
+            --dark-color: #2c3e50;
+            --gray-color: #6c757d;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 0;
+        }
+        
+        .app-container {
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 顶部导航栏 */
+        .app-header {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 18px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .app-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .app-title i {
+            margin-right: 10px;
+        }
+        
+        .app-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 4px;
+            font-weight: 300;
+        }
+        
+        /* 主内容区 */
+        .main-content {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* 选项卡导航 */
+        .tab-nav {
+            display: flex;
+            background-color: #f0f2f5;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            padding: 4px;
+            position: sticky;
+            top: 80px;
+            z-index: 10;
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            color: var(--gray-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .tab-button.active {
+            background-color: white;
+            color: var(--primary-color);
+            box-shadow: var(--box-shadow);
+        }
+        
+        /* 选项卡内容 */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 1rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e1e5eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #f9fafc;
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.15);
+            background-color: white;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(90deg, #28a745 0%, #1e7e34 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(90deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(90deg, #dc3545 0%, #c82333 100%);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        /* 单词列表 */
+        .word-list-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .word-item {
+            background-color: #f9fafc;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .word-item.active {
+            border-left-color: var(--accent-color);
+            background-color: #f0f9ff;
+        }
+        
+        .word-item:hover {
+            transform: translateX(3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .word-english {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 6px;
+            word-break: break-word;
+        }
+        
+        .word-chinese {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .word-example {
+            font-size: 0.95rem;
+            color: var(--gray-color);
+            font-style: italic;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #e1e5eb;
+        }
+        
+        .word-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .word-actions .btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        
+        /* 学习区域 */
+        .current-word-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%);
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .current-english {
+            font-size: 2.8rem;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+            word-break: break-word;
+        }
+        
+        .current-chinese {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .current-example {
+            font-size: 1.2rem;
+            color: var(--gray-color);
+            margin-top: 15px;
+            font-style: italic;
+            line-height: 1.5;
+        }
+        
+        .practice-count {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+            margin-top: 10px;
+        }
+        
+        /* 发音按钮组 */
+        .pronunciation-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .pronunciation-btn {
+            padding: 16px;
+            font-size: 1.1rem;
+        }
+        
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray-color);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .empty-state p {
+            font-size: 1.1rem;
+        }
+        
+        /* 语音选择 */
+        .voice-selector {
+            margin-top: 20px;
+        }
+        
+        .voice-select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e1e5eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: #f9fafc;
+            margin-top: 8px;
+        }
+        
+        /* 底部操作栏 */
+        .bottom-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        /* 响应式调整 */
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 768px;
+                margin: 20px auto;
+                min-height: calc(100vh - 40px);
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            }
+            
+            .pronunciation-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .current-english {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (min-width: 480px) {
+            .pronunciation-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .bottom-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .word-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* 语音动画 */
+        .speaking {
+            animation: pulse 1.5s infinite;
+            position: relative;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+            50% { transform: scale(1.03); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); }
+            100% { transform: scale(1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        }
+        
+        /* 提示信息 */
+        .hint {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid var(--primary-color);
+            font-size: 0.95rem;
+        }
+        
+        .hint-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hint-title i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        /* 加载指示器 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 保存提示 */
+        .save-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: 600;
+        }
+        
+        .save-notification.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 顶部导航栏 -->
+        <header class="app-header">
+            <div class="app-title">
+                <span><i class="fas fa-language"></i> 英语学习助手</span>
+                <span id="word-count" style="font-size: 1rem; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px;">0个单词</span>
+            </div>
+            <div class="app-subtitle">AI发音教学 - 支持离线保存</div>
+        </header>
+        
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 选项卡导航 -->
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="add-tab">
+                    <i class="fas fa-plus-circle"></i> 添加
+                </button>
+                <button class="tab-button" data-tab="list-tab">
+                    <i class="fas fa-list"></i> 列表
+                </button>
+                <button class="tab-button" data-tab="learn-tab">
+                    <i class="fas fa-graduation-cap"></i> 学习
+                </button>
+            </div>
+            
+            <!-- 添加单词选项卡 -->
+            <div id="add-tab" class="tab-content active">
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-plus-circle"></i> 添加新单词/短语</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="english-input">
+                            <i class="fas fa-font"></i> 英语单词/短语
+                        </label>
+                        <input type="text" id="english-input" class="form-input" 
+                               placeholder="例如：Hello, Artificial Intelligence" maxlength="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="chinese-input">
+                            <i class="fas fa-language"></i> 中文意思
+                        </label>
+                        <input type="text" id="chinese-input" class="form-input" 
+                               placeholder="例如：你好，人工智能" maxlength="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="example-input">
+                            <i class="fas fa-comment-alt"></i> 例句 (可选)
+                        </label>
+                        <input type="text" id="example-input" class="form-input" 
+                               placeholder="例如：Hello, how are you today?" maxlength="200">
+                    </div>
+                    
+                    <button id="add-word-btn" class="btn btn-primary">
+                        <i class="fas fa-save"></i> 保存到单词本
+                    </button>
+                    
+                    <div class="hint">
+                        <div class="hint-title">
+                            <i class="fas fa-lightbulb"></i> 提示
+                        </div>
+                        <p>添加的单词会自动保存到浏览器本地，即使关闭页面也不会丢失。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 单词列表选项卡 -->
+            <div id="list-tab" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-list"></i> 我的单词本</h2>
+                    
+                    <div class="word-list-container" id="word-list">
+                        <!-- 单词列表将在这里动态生成 -->
+                        <div class="empty-state" id="empty-list-message">
+                            <i class="fas fa-book-open"></i>
+                            <p>还没有添加任何单词<br>请在"添加"选项卡中添加单词</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bottom-actions">
+                        <button id="clear-all-btn" class="btn btn-secondary">
+                            <i class="fas fa-trash-alt"></i> 清空全部
+                        </button>
+                        <button id="practice-all-btn" class="btn btn-success">
+                            <i class="fas fa-play-circle"></i> 练习全部
+                        </button>
+                    </div>
+                    
+                    <div class="voice-selector">
+                        <label class="form-label" for="voice-select">
+                            <i class="fas fa-microphone-alt"></i> 选择发音语音
+                        </label>
+                        <select id="voice-select" class="voice-select">
+                            <!-- 语音选项将在这里动态生成 -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 学习选项卡 -->
+            <div id="learn-tab" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-graduation-cap"></i> 学习模式</h2>
+                    
+                    <div class="current-word-card" id="current-word-display">
+                        <div class="empty-state">
+                            <i class="fas fa-hand-point-left"></i>
+                            <p>请在"列表"选项卡中选择一个单词开始学习</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pronunciation-buttons">
+                        <button id="speak-english-btn" class="btn btn-primary pronunciation-btn">
+                            <i class="fas fa-volume-up"></i> 听英语发音
+                        </button>
+                        <button id="speak-chinese-btn" class="btn btn-primary pronunciation-btn">
+                            <i class="fas fa-volume-up"></i> 听中文意思
+                        </button>
+                        <button id="speak-slowly-btn" class="btn btn-success pronunciation-btn">
+                            <i class="fas fa-tachometer-alt"></i> 慢速发音
+                        </button>
+                        <button id="next-word-btn" class="btn btn-secondary pronunciation-btn">
+                            <i class="fas fa-forward"></i> 下一个单词
+                        </button>
+                    </div>
+                    
+                    <div class="hint">
+                        <div class="hint-title">
+                            <i class="fas fa-info-circle"></i> 学习建议
+                        </div>
+                        <p>1. 先仔细听AI发音，注意重音和语调</p>
+                        <p>2. 尝试跟读，模仿AI的发音</p>
+                        <p>3. 使用"慢速发音"功能学习难读的单词</p>
+                        <p>4. 每天坚持学习10-15分钟效果最佳</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- 保存成功提示 -->
+        <div id="save-notification" class="save-notification">
+            <i class="fas fa-check-circle"></i> 单词已保存
+        </div>
+    </div>
+
+    <script>
+        // 初始化变量
+        let words = [];
+        let currentWordIndex = -1;
+        let voices = [];
+        let selectedVoice = null;
+        
+        // DOM元素
+        const englishInput = document.getElementById('english-input');
+        const chineseInput = document.getElementById('chinese-input');
+        const exampleInput = document.getElementById('example-input');
+        const addWordBtn = document.getElementById('add-word-btn');
+        const wordListElement = document.getElementById('word-list');
+        const emptyListMessage = document.getElementById('empty-list-message');
+        const clearAllBtn = document.getElementById('clear-all-btn');
+        const practiceAllBtn = document.getElementById('practice-all-btn');
+        const speakEnglishBtn = document.getElementById('speak-english-btn');
+        const speakChineseBtn = document.getElementById('speak-chinese-btn');
+        const speakSlowlyBtn = document.getElementById('speak-slowly-btn');
+        const nextWordBtn = document.getElementById('next-word-btn');
+        const currentWordDisplay = document.getElementById('current-word-display');
+        const voiceSelect = document.getElementById('voice-select');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const saveNotification = document.getElementById('save-notification');
+        const wordCountElement = document.getElementById('word-count');
+        
+        // 从本地存储加载单词
+        function loadWords() {
+            const savedWords = localStorage.getItem('english-learning-words');
+            if (savedWords) {
+                try {
+                    words = JSON.parse(savedWords);
+                    updateWordCount();
+                    renderWordList();
+                } catch (e) {
+                    console.error('加载单词数据失败:', e);
+                    words = [];
+                }
+            } else {
+                // 如果没有保存的单词，添加一些示例单词
+                words = [
+                    { english: "Hello", chinese: "你好", example: "Hello, how are you today?", practiceCount: 0 },
+                    { english: "Thank you", chinese: "谢谢", example: "Thank you for your help.", practiceCount: 0 },
+                    { english: "Good morning", chinese: "早上好", example: "Good morning, have a nice day!", practiceCount: 0 },
+                    { english: "Artificial Intelligence", chinese: "人工智能", example: "AI is changing our world.", practiceCount: 0 }
+                ];
+                saveWords();
+                renderWordList();
+            }
+        }
+        
+        // 保存单词到本地存储
+        function saveWords() {
+            localStorage.setItem('english-learning-words', JSON.stringify(words));
+            updateWordCount();
+            showSaveNotification();
+        }
+        
+        // 显示保存成功提示
+        function showSaveNotification() {
+            saveNotification.classList.add('show');
+            setTimeout(() => {
+                saveNotification.classList.remove('show');
+            }, 2000);
+        }
+        
+        // 更新单词计数
+        function updateWordCount() {
+            const count = words.length;
+            wordCountElement.textContent = `${count}个单词`;
+        }
+        
+        // 渲染单词列表
+        function renderWordList() {
+            wordListElement.innerHTML = '';
+            
+            if (words.length === 0) {
+                emptyListMessage.style.display = 'block';
+                return;
+            }
+            
+            emptyListMessage.style.display = 'none';
+            
+            words.forEach((word, index) => {
+                const wordItem = document.createElement('div');
+                wordItem.className = `word-item ${currentWordIndex === index ? 'active' : ''}`;
+                wordItem.innerHTML = `
+                    <div class="word-english">${word.english}</div>
+                    <div class="word-chinese">${word.chinese}</div>
+                    ${word.example ? `<div class="word-example">例句: ${word.example}</div>` : ''}
+                    <div class="word-actions">
+                        <button class="btn btn-primary learn-btn" data-index="${index}">
+                            <i class="fas fa-play"></i> 学习
+                        </button>
+                        <button class="btn btn-danger delete-btn" data-index="${index}">
+                            <i class="fas fa-trash"></i> 删除
+                        </button>
+                    </div>
+                `;
+                
+                wordListElement.appendChild(wordItem);
+            });
+            
+            // 添加事件监听器
+            document.querySelectorAll('.learn-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    selectWord(index);
+                    // 切换到学习选项卡
+                    switchTab('learn-tab');
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    deleteWord(index);
+                });
+            });
+        }
+        
+        // 添加新单词
+        function addWord() {
+            const english = englishInput.value.trim();
+            const chinese = chineseInput.value.trim();
+            const example = exampleInput.value.trim();
+            
+            if (!english || !chinese) {
+                alert('请填写英语单词和中文意思！');
+                return;
+            }
+            
+            // 检查是否已存在相同的单词
+            const existingIndex = words.findIndex(w => w.english.toLowerCase() === english.toLowerCase());
+            
+            if (existingIndex >= 0) {
+                if (confirm('这个单词已经存在，要更新它吗？')) {
+                    // 更新现有单词
+                    words[existingIndex] = {
+                        english,
+                        chinese,
+                        example,
+                        practiceCount: words[existingIndex].practiceCount || 0
+                    };
+                    saveWords();
+                    renderWordList();
+                    
+                    // 如果更新的是当前选中的单词，刷新显示
+                    if (currentWordIndex === existingIndex) {
+                        selectWord(existingIndex);
+                    }
+                }
+            } else {
+                // 添加新单词
+                const newWord = {
+                    english,
+                    chinese,
+                    example,
+                    practiceCount: 0
+                };
+                
+                words.push(newWord);
+                saveWords();
+                renderWordList();
+                
+                // 选择新添加的单词并切换到学习选项卡
+                selectWord(words.length - 1);
+                switchTab('learn-tab');
+            }
+            
+            // 清空输入框
+            englishInput.value = '';
+            chineseInput.value = '';
+            exampleInput.value = '';
+            
+            // 聚焦到英语输入框
+            englishInput.focus();
+        }
+        
+        // 删除单词
+        function deleteWord(index) {
+            if (confirm('确定要删除这个单词吗？')) {
+                words.splice(index, 1);
+                saveWords();
+                renderWordList();
+                
+                // 如果删除的是当前选中的单词，清空学习区域
+                if (currentWordIndex === index) {
+                    currentWordIndex = -1;
+                    clearCurrentWordDisplay();
+                } else if (currentWordIndex > index) {
+                    currentWordIndex--;
+                }
+            }
+        }
+        
+        // 选择单词
+        function selectWord(index) {
+            if (index < 0 || index >= words.length) return;
+            
+            currentWordIndex = index;
+            const word = words[index];
+            
+            // 更新学习区域
+            currentWordDisplay.innerHTML = `
+                <div class="current-english">${word.english}</div>
+                <div class="current-chinese">${word.chinese}</div>
+                ${word.example ? `<div class="current-example">例句: ${word.example}</div>` : ''}
+                <div class="practice-count">已练习: ${word.practiceCount || 0} 次</div>
+            `;
+            
+            // 增加练习次数
+            word.practiceCount = (word.practiceCount || 0) + 1;
+            saveWords();
+            
+            // 更新单词列表高亮
+            renderWordList();
+        }
+        
+        // 清空当前单词显示
+        function clearCurrentWordDisplay() {
+            currentWordDisplay.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-hand-point-left"></i>
+                    <p>请在"列表"选项卡中选择一个单词开始学习</p>
+                </div>
+            `;
+        }
+        
+        // 清空所有单词
+        function clearAllWords() {
+            if (words.length === 0) {
+                alert('单词列表已经是空的！');
+                return;
+            }
+            
+            if (confirm('确定要清空所有单词吗？此操作不可撤销。')) {
+                words = [];
+                saveWords();
+                renderWordList();
+                clearCurrentWordDisplay();
+                currentWordIndex = -1;
+            }
+        }
+        
+        // 切换到下一个单词
+        function nextWord() {
+            if (words.length === 0) {
+                alert('请先添加一些单词到列表！');
+                return;
+            }
+            
+            if (currentWordIndex < 0) {
+                // 如果当前没有选中的单词，选择第一个
+                selectWord(0);
+            } else {
+                // 选择下一个单词，循环到开头
+                const nextIndex = (currentWordIndex + 1) % words.length;
+                selectWord(nextIndex);
+            }
+        }
+        
+        // 发音函数
+        function speakText(text, lang, rate = 1.0) {
+            if (!('speechSynthesis' in window)) {
+                alert('您的浏览器不支持语音合成功能，请使用最新版的Chrome、Edge或Safari浏览器。');
+                return;
+            }
+            
+            // 停止当前正在进行的语音
+            speechSynthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;
+            utterance.rate = rate;
+            
+            // 如果选择了特定语音，使用它
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+            
+            // 添加语音开始和结束的动画
+            const speakingButtons = [speakEnglishBtn, speakChineseBtn, speakSlowlyBtn];
+            speakingButtons.forEach(btn => {
+                if (btn) btn.classList.add('speaking');
+            });
+            
+            utterance.onend = function() {
+                speakingButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('speaking');
+                });
+            };
+            
+            utterance.onerror = function() {
+                speakingButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('speaking');
+                });
+                alert('发音时出现错误，请确保您的浏览器支持语音合成功能。');
+            };
+            
+            speechSynthesis.speak(utterance);
+        }
+        
+        // 说英语
+        function speakEnglish() {
+            if (currentWordIndex === -1) {
+                alert('请先选择一个单词！');
+                return;
+            }
+            
+            const word = words[currentWordIndex];
+            speakText(word.english, 'en-US', 1.0);
+        }
+        
+        // 说中文
+        function speakChinese() {
+            if (currentWordIndex === -1) {
+                alert('请先选择一个单词！');
+                return;
+            }
+            
+            const word = words[currentWordIndex];
+            speakText(word.chinese, 'zh-CN', 1.0);
+        }
+        
+        // 慢速说英语
+        function speakSlowly() {
+            if (currentWordIndex === -1) {
+                alert('请先选择一个单词！');
+                return;
+            }
+            
+            const word = words[currentWordIndex];
+            speakText(word.english, 'en-US', 0.7);
+        }
+        
+        // 练习所有单词发音
+        function practiceAllWords() {
+            if (words.length === 0) {
+                alert('请先添加一些单词到列表！');
+                return;
+            }
+            
+            let index = 0;
+            
+            function speakNextWord() {
+                if (index >= words.length) {
+                    alert('所有单词练习完成！');
+                    return;
+                }
+                
+                selectWord(index);
+                const word = words[index];
+                
+                // 先说英语，然后说中文
+                const utteranceEnglish = new SpeechSynthesisUtterance(word.english);
+                utteranceEnglish.lang = 'en-US';
+                utteranceEnglish.rate = 0.8;
+                
+                if (selectedVoice) {
+                    utteranceEnglish.voice = selectedVoice;
+                }
+                
+                utteranceEnglish.onend = function() {
+                    // 等待1秒后说中文
+                    setTimeout(() => {
+                        const utteranceChinese = new SpeechSynthesisUtterance(word.chinese);
+                        utteranceChinese.lang = 'zh-CN';
+                        utteranceChinese.rate = 1.0;
+                        
+                        if (selectedVoice) {
+                            utteranceChinese.voice = selectedVoice;
+                        }
+                        
+                        utteranceChinese.onend = function() {
+                            // 等待2秒后说下一个单词
+                            index++;
+                            setTimeout(speakNextWord, 2000);
+                        };
+                        
+                        speechSynthesis.speak(utteranceChinese);
+                    }, 1000);
+                };
+                
+                speechSynthesis.speak(utteranceEnglish);
+            }
+            
+            speakNextWord();
+        }
+        
+        // 加载语音列表
+        function loadVoices() {
+            // 获取可用的语音列表
+            voices = speechSynthesis.getVoices();
+            
+            // 清空语音选择框
+            voiceSelect.innerHTML = '';
+            
+            // 添加默认选项
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = '使用默认语音';
+            voiceSelect.appendChild(defaultOption);
+            
+            // 添加所有可用的语音
+            voices.forEach((voice, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                
+                // 默认选择英语语音
+                if (voice.lang.startsWith('en') || voice.name.includes('English')) {
+                    option.selected = true;
+                    selectedVoice = voice;
+                }
+                
+                voiceSelect.appendChild(option);
+            });
+            
+            // 如果没有英语语音，选择第一个可用的语音
+            if (!selectedVoice && voices.length > 0) {
+                selectedVoice = voices[0];
+                voiceSelect.options[0].selected = true;
+            }
+        }
+        
+        // 切换选项卡
+        function switchTab(tabId) {
+            // 更新选项卡按钮状态
+            tabButtons.forEach(button => {
+                if (button.getAttribute('data-tab') === tabId) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+            
+            // 更新选项卡内容
+            tabContents.forEach(content => {
+                if (content.id === tabId) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+        
+        // 事件监听器
+        addWordBtn.addEventListener('click', addWord);
+        clearAllBtn.addEventListener('click', clearAllWords);
+        practiceAllBtn.addEventListener('click', practiceAllWords);
+        speakEnglishBtn.addEventListener('click', speakEnglish);
+        speakChineseBtn.addEventListener('click', speakChinese);
+        speakSlowlyBtn.addEventListener('click', speakSlowly);
+        nextWordBtn.addEventListener('click', nextWord);
+        
+        // 允许按Enter键添加单词
+        englishInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addWord();
+            }
+        });
+        
+        chineseInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addWord();
+            }
+        });
+        
+        exampleInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addWord();
+            }
+        });
+        
+        // 语音选择变化事件
+        voiceSelect.addEventListener('change', function() {
+            if (this.value === '') {
+                selectedVoice = null;
+            } else {
+                selectedVoice = voices[parseInt(this.value)];
+            }
+        });
+        
+        // 选项卡切换事件
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                switchTab(tabId);
+            });
+        });
+        
+        // 当语音列表加载完成时
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+        
+        // 初始化应用
+        function initApp() {
+            loadWords();
+            loadVoices();
+            
+            // 如果单词列表不为空，默认选择第一个单词
+            if (words.length > 0) {
+                selectWord(0);
+            }
+            
+            // 添加触摸反馈效果
+            document.querySelectorAll('button').forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                button.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+            
+            console.log('英语学习助手已初始化，已加载', words.length, '个单词');
+        }
+        
+        // 页面加载完成后初始化应用
+        document.addEventListener('DOMContentLoaded', initApp);
+        
+        // 防止页面滚动时地址栏显示/隐藏引起的布局问题
+        window.addEventListener('resize', function() {
+            // 延迟执行以确保布局正确
+            setTimeout(() => {
+                document.activeElement.blur();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
