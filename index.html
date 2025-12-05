@@ -16,6 +16,7 @@
             --dark-color: #2c3e50;
             --favorite-color: #e74c3c;
             --edit-color: #9b59b6;
+            --gray-color: #7f8c8d;
             --border-radius: 4px;
             --box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
             --transition: all 0.15s ease;
@@ -999,6 +1000,7 @@
                             <option value="法规与注册">法规与注册</option>
                             <option value="EHS与供应链">EHS与供应链</option>
                             <option value="综合管理">综合管理</option>
+                            <option value="常用词语">常用词语</option>
                         </select>
                     </div>
                     
@@ -1054,6 +1056,7 @@
                         <button class="category-btn" data-category="法规与注册">法规注册</button>
                         <button class="category-btn" data-category="EHS与供应链">EHS供应链</button>
                         <button class="category-btn" data-category="综合管理">综合管理</button>
+                        <button class="category-btn" data-category="常用词语">常用词语</button>
                         <button class="category-btn" data-category="favorite">收藏</button>
                     </div>
                     
@@ -1376,6 +1379,7 @@
                                 <option value="法规与注册">法规与注册</option>
                                 <option value="EHS与供应链">EHS与供应链</option>
                                 <option value="综合管理">综合管理</option>
+                                <option value="常用词语">常用词语</option>
                             </select>
                         </div>
                         
@@ -1497,7 +1501,7 @@
         let editingWordIndex = -1;
         let isInputMode = false; // 是否手动输入模式
         
-        // 制药行业词汇数据
+        // 制药行业词汇数据 - 已整合所有词汇并去重
         const pharmaceuticalTerms = [
             // 研发与工艺
             { english: "CMC", chinese: "化学、制造与控制", category: "研发与工艺", example: "", difficulty: "easy" },
@@ -1541,73 +1545,67 @@
             { english: "Quality Analysis Room", chinese: "质量部分析室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Backup Power/Power Distribution Room", chinese: "备用电源/配电室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Sampling Room", chinese: "样品接收室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Glassware room", chinese: "玻璃器皿室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Balance Room", chinese: "天平室I", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Distribution cabinet", chinese: "配电柜", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Sample preparation Room", chinese: "配样室", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Glassware Room", chinese: "玻璃器皿室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Balance Room", chinese: "天平室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Distribution Cabinet", chinese: "配电柜", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Sample Preparation Room", chinese: "配样室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "HPLC Room", chinese: "液相分析室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Sample preparation Room", chinese: "配样室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "High Temperature Room", chinese: "高温室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Comprehensive Instrument Room", chinese: "综合仪器室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "IR Room", chinese: "红外分析室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "HPLC Room", chinese: "液相分析室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Moisture Measurement Room", chinese: "水分分析室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Balance Room", chinese: "天平室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "GC Room", chinese: "气相分析室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Physicochemical Analysis Room", chinese: "理化室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Locker Room", chinese: "更衣室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Source gas Room", chinese: "气源室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "QC office", chinese: "QC办公室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Vice president's office", chinese: "副总办公室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Director‘s office", chinese: "总监办公室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Glove box Room", chinese: "手套箱室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Mother and child Rooms", chinese: "母婴室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Source Gas Room", chinese: "气源室", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "QC Office", chinese: "QC办公室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Vice President's Office", chinese: "副总办公室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Director's Office", chinese: "总监办公室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Glove Box Room", chinese: "手套箱室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Mother and Child Rooms", chinese: "母婴室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Power Distribution Room", chinese: "配电室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Psychz", chinese: "机房", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Storage room", chinese: "储物间", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Storage Room", chinese: "储物间", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Cleaning Tools Room", chinese: "洁具间", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Generator Room", chinese: "发电机房", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Pantry Room", chinese: "茶水间", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Dressing Room", chinese: "访客更衣室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Men's room", chinese: "男卫生间", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Men's Room", chinese: "男卫生间", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Staircase", chinese: "楼梯间", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "R&D Laboratory", chinese: "实验室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Magnification Stage Laboratory", chinese: "公斤级实验室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Standard/reference substance Room", chinese: "标准/对照品室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Storage room for consumables", chinese: "耗材存放间", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Standard/Reference Substance Room", chinese: "标准/对照品室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Storage Room for Consumables", chinese: "耗材存放间", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Reagent Room", chinese: "试剂间", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "IT Server", chinese: "网络服务器", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Titration analysis Room", chinese: "滴定分析室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Cool storage Room", chinese: "阴凉暂存间", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Titration Analysis Room", chinese: "滴定分析室", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Cool Storage Room", chinese: "阴凉暂存间", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Sample Retention Room", chinese: "留样室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Microbiolgical Lab", chinese: "微生物实验室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Shoes Changning Room", chinese: "换鞋室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Microbiological Lab", chinese: "微生物实验室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Shoes Changing Room", chinese: "换鞋室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Negative Gowning Room", chinese: "阴性一更", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Negative Gowning Room", chinese: "阴性二更", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Negative disinfection Room", chinese: "阴性消毒室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Negative Gowning Room II", chinese: "阴性二更", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Negative Disinfection Room", chinese: "阴性消毒室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Buffer Room", chinese: "缓冲间", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Micro.Testing Room", chinese: "微生物检测", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Micro Testing Room", chinese: "微生物检测", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Positive Gowning Room I", chinese: "阳性一更", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Positive disinfection Room", chinese: "阳性消毒室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Positive bacterial Room", chinese: "阳性菌室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Positive Disinfection Room", chinese: "阳性消毒室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Positive Bacterial Room", chinese: "阳性菌室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Preparation Room", chinese: "准备室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Incubation Room", chinese: "培养室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Culture medium/strain storage Room", chinese: "培养基/菌种存放室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Preparation Room", chinese: "配制室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Culture Medium/Strain Storage Room", chinese: "培养基/菌种存放室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Sterilizing Room", chinese: "灭菌室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Storage Room", chinese: "仪器/耗材存放室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Microbiology office", chinese: "微生物办公室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Microbiology Office", chinese: "微生物办公室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Stability Lab", chinese: "稳定性实验室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Meeting Room", chinese: "会议室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "QA office", chinese: "QA办公室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "QA Office", chinese: "QA办公室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Archives", chinese: "档案室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "R&D Analysis Room", chinese: "研发分析室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Physicochemical Analysis Room", chinese: "理化室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Source gas/mechanical pump room", chinese: "气源/机械泵室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Source Gas/Mechanical Pump Room", chinese: "气源/机械泵室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "PSD Room", chinese: "PSD分析室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "ICP-MS Room", chinese: "ICP-MS分析室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "XRD Room", chinese: "XRD分析室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "IR Room", chinese: "IR分析室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Drying Room", chinese: "烘箱室", category: "设施与区域", example: "", difficulty: "easy" },
             
             // 生产与设备
@@ -1666,7 +1664,107 @@
             { english: "Batch Number / Lot Number", chinese: "批号", category: "综合管理", example: "", difficulty: "easy" },
             { english: "Expiry Date / Retest Date", chinese: "有效期/复验期", category: "综合管理", example: "", difficulty: "medium" },
             { english: "Quarantine / Release", chinese: "待检/放行", category: "综合管理", example: "", difficulty: "medium" },
-            { english: "Traceability", chinese: "可追溯性", category: "综合管理", example: "", difficulty: "hard" }
+            { english: "Traceability", chinese: "可追溯性", category: "综合管理", example: "", difficulty: "hard" },
+            
+            // 常用词语
+            { english: "Quality Management", chinese: "质量管理", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Quality Inspection", chinese: "质量检验", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Process", chinese: "工序", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Contamination", chinese: "污染", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Cross-contamination", chinese: "交叉污染", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Buildings and Facilities", chinese: "厂房与设施", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Production Environment", chinese: "生产环境", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Clean Air Level", chinese: "空气洁净级别", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Insect", chinese: "昆虫", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Clean Room (Area)", chinese: "洁净室（区）", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Disinfection", chinese: "消毒", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Sterile", chinese: "无菌", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Dust Accumulation", chinese: "灰尘积聚", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Production Scale", chinese: "生产规模", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Store Area", chinese: "储存区", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Material", chinese: "物料", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Raw Material and Incipient", chinese: "原辅料", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Intermediate Product", chinese: "中间产品", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Finished Product", chinese: "成品", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Quarantined Material", chinese: "待验品", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Pipeline", chinese: "管道", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Utilities of Public Service", chinese: "公用设施, 公用工程", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Lighting", chinese: "照明", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Purification", chinese: "净化", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Micro-organism", chinese: "微生物", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Monitoring", chinese: "监测", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Record", chinese: "记录", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Seal", chinese: "密封", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Ceiling", chinese: "天花板", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Temperature", chinese: "温度", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "RH: Relative Humidity", chinese: "相对湿度", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Floor Drain", chinese: "地漏", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Distribution Room", chinese: "分装室", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Package", chinese: "包装", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Bacteria", chinese: "细菌", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Pretreatment", chinese: "前处理", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Ventilation", chinese: "通风", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Sampling", chinese: "取样", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Weighing Room", chinese: "称量室", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Verification", chinese: "检定 验证", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "PW: Purified Water", chinese: "纯化水", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Tank", chinese: "储罐", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Measuring Tool", chinese: "量具", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Weighing Instrument", chinese: "衡器", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Maintenance", chinese: "维修、保养", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Disqualified, Reject, Non-conforming", chinese: "不合格", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Purchasing", chinese: "购买", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Releasing", chinese: "发放", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Loading", chinese: "入库", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Solid", chinese: "固体", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Liquid", chinese: "液体", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Acceptance", chinese: "验收", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Combustible", chinese: "易燃", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Explosive", chinese: "易爆", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Instruction", chinese: "使用说明书", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Label", chinese: "标签", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Sanitation", chinese: "卫生, 清洁/消毒", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Workshop", chinese: "车间", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Time Interval", chinese: "间隔时间", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Detergent", chinese: "清洁剂", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Disinfectant", chinese: "消毒剂", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Wastes", chinese: "废弃物", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Changing Room", chinese: "更衣室", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Work Clothes", chinese: "工作服", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Verification, Validation", chinese: "验证", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Qualification", chinese: "确认", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Installation", chinese: "安装", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Running Operation", chinese: "运行", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Document", chinese: "文件", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Complaint", chinese: "投诉", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Product Name", chinese: "品名", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Container", chinese: "容器", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Application", chinese: "申请", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Stability", chinese: "稳定性", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Draft", chinese: "起草", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Production Management", chinese: "生产管理", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Certificate", chinese: "合格证", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Clearance", chinese: "清场", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Internal Control", chinese: "内控", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Validity, Expiry Date, Shelf Life", chinese: "有效期", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Product Sales and Recall", chinese: "产品销售与召回", category: "常用词语", example: "", difficulty: "hard" },
+            { english: "Complaints", chinese: "投诉", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Self-inspection", chinese: "自检", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Balance", chinese: "平衡、天平", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Drinking Water", chinese: "饮用水", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Batch", chinese: "批", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Batch Number", chinese: "批号", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "In-process Control", chinese: "中控", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Theoretical Yield", chinese: "理论产量", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Actual Yield", chinese: "实际产量", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Rate", chinese: "比率", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Acceptance Criteria", chinese: "验收标准可接受标准", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Contaminant", chinese: "污染物", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Preparation", chinese: "制备", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Blend", chinese: "混合", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Processing", chinese: "加工", category: "常用词语", example: "", difficulty: "easy" },
+            { english: "Concentration", chinese: "浓度", category: "常用词语", example: "", difficulty: "medium" },
+            { english: "Purity", chinese: "纯度", category: "常用词语", example: "", difficulty: "medium" }
         ];
         
         // DOM元素
