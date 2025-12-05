@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>制药英语学习助手</title>
+    <title>隆莱英语学习助手</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -14,8 +14,8 @@
             --light-color: #ecf0f1;
             --dark-color: #2c3e50;
             --gray-color: #7f8c8d;
-            --border-radius: 8px;
-            --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --border-radius: 6px;
+            --box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
             --transition: all 0.2s ease;
         }
         
@@ -30,7 +30,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
             background-color: #f5f7fa;
             color: var(--dark-color);
-            line-height: 1.5;
+            line-height: 1.4;
             min-height: 100vh;
             padding: 0;
             font-size: 14px;
@@ -44,52 +44,51 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         }
         
-        /* 顶部导航栏 */
+        /* 顶部导航栏 - 更紧凑 */
         .app-header {
             background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
             color: white;
-            padding: 12px 15px;
+            padding: 10px 12px;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
         
         .app-title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         
         .app-title i {
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         .app-subtitle {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             opacity: 0.9;
-            margin-top: 2px;
+            margin-top: 1px;
         }
         
         .word-count {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             background: rgba(255,255,255,0.2);
-            padding: 3px 8px;
-            border-radius: 12px;
+            padding: 2px 6px;
+            border-radius: 10px;
         }
         
-        /* 主内容区 */
+        /* 主内容区 - 减少上边距 */
         .main-content {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -99,25 +98,25 @@
             display: flex;
             background-color: #f0f2f5;
             border-radius: var(--border-radius);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             padding: 2px;
             position: sticky;
-            top: 65px;
+            top: 55px;
             z-index: 10;
         }
         
         .tab-button {
             flex: 1;
-            padding: 10px 5px;
+            padding: 8px 4px;
             text-align: center;
             border: none;
             background: transparent;
             font-weight: 600;
             color: var(--gray-color);
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             white-space: nowrap;
         }
         
@@ -130,7 +129,7 @@
         /* 选项卡内容 */
         .tab-content {
             display: none;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
         
         .tab-content.active {
@@ -141,17 +140,17 @@
         .card {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 12px;
+            margin-bottom: 12px;
             box-shadow: var(--box-shadow);
         }
         
         .card-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--dark-color);
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--secondary-color);
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--secondary-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -159,28 +158,28 @@
         
         .card-title i {
             color: var(--secondary-color);
-            margin-right: 6px;
+            margin-right: 5px;
         }
         
         /* 紧凑表单样式 */
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         
         .form-label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             font-weight: 600;
             color: var(--dark-color);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .form-input {
             width: 100%;
-            padding: 10px 12px;
-            border: 1.5px solid #e1e5eb;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            padding: 8px 10px;
+            border: 1px solid #e1e5eb;
+            border-radius: 5px;
+            font-size: 0.85rem;
             transition: var(--transition);
             background-color: #f9fafc;
         }
@@ -188,16 +187,16 @@
         .form-input:focus {
             border-color: var(--secondary-color);
             outline: none;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.15);
+            box-shadow: 0 0 0 1px rgba(52, 152, 219, 0.15);
             background-color: white;
         }
         
         .form-select {
             width: 100%;
-            padding: 10px 12px;
-            border: 1.5px solid #e1e5eb;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            padding: 8px 10px;
+            border: 1px solid #e1e5eb;
+            border-radius: 5px;
+            font-size: 0.85rem;
             background-color: #f9fafc;
             color: var(--dark-color);
         }
@@ -207,11 +206,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            padding: 12px;
+            gap: 5px;
+            padding: 10px;
             border: none;
-            border-radius: 6px;
-            font-size: 0.95rem;
+            border-radius: 5px;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
@@ -238,22 +237,28 @@
             color: white;
         }
         
+        .btn-sm {
+            padding: 6px 8px;
+            font-size: 0.75rem;
+            width: auto;
+        }
+        
         .btn:active {
             transform: translateY(1px);
         }
         
         /* 单词列表 */
         .word-list-container {
-            max-height: 300px;
+            max-height: 350px;
             overflow-y: auto;
-            margin-top: 10px;
+            margin-top: 8px;
             -webkit-overflow-scrolling: touch;
             border: 1px solid #eee;
-            border-radius: 6px;
+            border-radius: 5px;
         }
         
         .word-item {
-            padding: 12px 15px;
+            padding: 10px 12px;
             border-bottom: 1px solid #f0f0f0;
             transition: var(--transition);
             display: flex;
@@ -267,130 +272,130 @@
         
         .word-item.active {
             background-color: #f0f9ff;
-            border-left: 3px solid var(--secondary-color);
+            border-left: 2px solid var(--secondary-color);
         }
         
         .word-info {
             flex: 1;
+            min-width: 0;
         }
         
         .word-english {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--dark-color);
-            margin-bottom: 4px;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .word-chinese {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--gray-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .word-category {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: white;
             background-color: var(--primary-color);
-            padding: 2px 6px;
-            border-radius: 10px;
+            padding: 1px 5px;
+            border-radius: 8px;
             display: inline-block;
-            margin-top: 5px;
+            margin-top: 4px;
         }
         
         .word-actions {
             display: flex;
-            gap: 6px;
-        }
-        
-        .word-actions .btn {
-            width: auto;
-            padding: 6px 10px;
-            font-size: 0.8rem;
-            border-radius: 4px;
+            gap: 5px;
         }
         
         /* 学习区域 */
         .current-word-card {
-            padding: 20px 15px;
+            padding: 16px 12px;
             background: linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%);
             border-radius: var(--border-radius);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             box-shadow: var(--box-shadow);
             text-align: center;
         }
         
         .current-english {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--dark-color);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 700;
             word-break: break-word;
         }
         
         .current-chinese {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--secondary-color);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .current-category {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--accent-color);
             background-color: rgba(39, 174, 96, 0.1);
-            padding: 4px 10px;
-            border-radius: 12px;
+            padding: 3px 8px;
+            border-radius: 10px;
             display: inline-block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .practice-count {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--gray-color);
-            margin-top: 8px;
+            margin-top: 6px;
         }
         
         /* 紧凑发音按钮组 */
         .pronunciation-buttons {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-top: 15px;
+            gap: 6px;
+            margin-top: 12px;
         }
         
         .pronunciation-btn {
-            padding: 12px 8px;
-            font-size: 0.9rem;
+            padding: 10px 6px;
+            font-size: 0.85rem;
         }
         
         /* 空状态 */
         .empty-state {
             text-align: center;
-            padding: 30px 15px;
+            padding: 25px 12px;
             color: var(--gray-color);
         }
         
         .empty-state i {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin-bottom: 8px;
             opacity: 0.5;
         }
         
         .empty-state p {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
         
         /* 语音选择 */
         .voice-selector {
-            margin-top: 15px;
-            padding-top: 15px;
+            margin-top: 12px;
+            padding-top: 12px;
             border-top: 1px dashed #eee;
         }
         
         .voice-select {
             width: 100%;
-            padding: 10px 12px;
-            border: 1.5px solid #e1e5eb;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            padding: 8px 10px;
+            border: 1px solid #e1e5eb;
+            border-radius: 5px;
+            font-size: 0.85rem;
             background-color: #f9fafc;
             margin-top: 5px;
         }
@@ -398,24 +403,24 @@
         /* 底部操作栏 */
         .bottom-actions {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 15px;
+            grid-template-columns: 1fr;
+            gap: 6px;
+            margin-top: 12px;
         }
         
         /* 分类筛选 */
         .category-filter {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 15px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 12px;
         }
         
         .category-btn {
-            padding: 8px 5px;
+            padding: 6px 4px;
             border: none;
-            border-radius: 6px;
-            font-size: 0.8rem;
+            border-radius: 5px;
+            font-size: 0.75rem;
             background-color: #f0f2f5;
             color: var(--dark-color);
             cursor: pointer;
@@ -434,23 +439,23 @@
         /* 紧凑提示信息 */
         .hint {
             background-color: #e8f4fc;
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 15px;
-            border-left: 3px solid var(--secondary-color);
-            font-size: 0.85rem;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 12px;
+            border-left: 2px solid var(--secondary-color);
+            font-size: 0.8rem;
         }
         
         .hint-title {
             font-weight: 600;
             color: var(--dark-color);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
         }
         
         .hint-title i {
-            margin-right: 6px;
+            margin-right: 5px;
             color: var(--secondary-color);
         }
         
@@ -461,41 +466,31 @@
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); }
-            50% { transform: scale(1.02); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }
-            100% { transform: scale(1); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); }
+            0% { transform: scale(1); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
+            50% { transform: scale(1.02); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); }
+            100% { transform: scale(1); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
         }
         
         /* 保存提示 */
         .save-notification {
             position: fixed;
-            bottom: 15px;
+            bottom: 12px;
             left: 50%;
             transform: translateX(-50%);
             background-color: var(--accent-color);
             color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            padding: 8px 16px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .save-notification.show {
             opacity: 1;
-        }
-        
-        /* 页面切换动画 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .tab-content.active {
-            animation: fadeIn 0.2s ease;
         }
         
         /* 语音状态指示器 */
@@ -503,15 +498,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            margin-top: 12px;
-            font-size: 0.8rem;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 0.75rem;
             color: var(--gray-color);
         }
         
         .voice-status-indicator {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background-color: #27ae60;
         }
@@ -523,10 +518,10 @@
         /* 响应式调整 */
         @media (min-width: 768px) {
             .app-container {
-                max-width: 450px;
-                margin: 10px auto;
-                min-height: calc(100vh - 20px);
-                border-radius: 10px;
+                max-width: 420px;
+                margin: 8px auto;
+                min-height: calc(100vh - 16px);
+                border-radius: 8px;
                 overflow: hidden;
             }
         }
@@ -537,38 +532,19 @@
             cursor: not-allowed;
         }
         
-        /* 紧凑表格样式 */
-        .compact-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
-        
-        .compact-table th, .compact-table td {
-            padding: 8px 10px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .compact-table th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
-        
         /* 快速操作按钮 */
         .quick-actions {
             display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
+            gap: 6px;
+            margin-bottom: 12px;
         }
         
         .quick-action-btn {
             flex: 1;
-            padding: 8px 10px;
+            padding: 6px 8px;
             border: none;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
             background-color: #f0f2f5;
             color: var(--dark-color);
             cursor: pointer;
@@ -580,6 +556,19 @@
             background-color: var(--secondary-color);
             color: white;
         }
+        
+        /* 分类练习统计 */
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .category-count {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+        }
     </style>
 </head>
 <body>
@@ -588,9 +577,9 @@
         <header class="app-header">
             <div>
                 <div class="app-title">
-                    <i class="fas fa-pills"></i> 制药英语助手
+                    <i class="fas fa-language"></i> 隆莱英语助手
                 </div>
-                <div class="app-subtitle">专业术语发音学习</div>
+                <div class="app-subtitle">学习专业术语发音</div>
             </div>
             <div class="word-count" id="word-count">0词</div>
         </header>
@@ -658,7 +647,7 @@
                         <i class="fas fa-save"></i> 保存术语
                     </button>
                     
-                    <div class="hint" style="margin-top: 15px;">
+                    <div class="hint" style="margin-top: 12px;">
                         <div class="hint-title">
                             <i class="fas fa-lightbulb"></i> 提示
                         </div>
@@ -687,21 +676,19 @@
                         <button class="category-btn" data-category="综合管理">综合管理</button>
                     </div>
                     
+                    <div class="category-stats">
+                        <div class="category-count" id="category-practice-count">当前分类: 0个术语</div>
+                        <button id="practice-category-btn" class="btn btn-success btn-sm">
+                            <i class="fas fa-play-circle"></i> 练习当前分类
+                        </button>
+                    </div>
+                    
                     <div class="word-list-container" id="word-list">
                         <!-- 单词列表将在这里动态生成 -->
                         <div class="empty-state" id="empty-list-message">
                             <i class="fas fa-book-open"></i>
                             <p>术语库为空<br>点击"添加"选项卡录入术语</p>
                         </div>
-                    </div>
-                    
-                    <div class="bottom-actions">
-                        <button id="clear-all-btn" class="btn btn-secondary">
-                            <i class="fas fa-trash-alt"></i> 清空
-                        </button>
-                        <button id="practice-all-btn" class="btn btn-success">
-                            <i class="fas fa-play-circle"></i> 练习
-                        </button>
                     </div>
                     
                     <div class="voice-selector">
@@ -750,7 +737,7 @@
                         <div id="voice-status-indicator" class="voice-status-indicator inactive"></div>
                     </div>
                     
-                    <div class="hint" style="margin-top: 15px;">
+                    <div class="hint" style="margin-top: 12px;">
                         <div class="hint-title">
                             <i class="fas fa-info-circle"></i> 学习建议
                         </div>
@@ -778,6 +765,7 @@
         let isChineseVoiceAvailable = false;
         let isEnglishVoiceAvailable = false;
         let currentCategoryFilter = 'all';
+        let isPracticing = false;
         
         // 制药行业词汇数据
         const pharmaceuticalTerms = [
@@ -885,8 +873,7 @@
         const addWordBtn = document.getElementById('add-word-btn');
         const wordListElement = document.getElementById('word-list');
         const emptyListMessage = document.getElementById('empty-list-message');
-        const clearAllBtn = document.getElementById('clear-all-btn');
-        const practiceAllBtn = document.getElementById('practice-all-btn');
+        const practiceCategoryBtn = document.getElementById('practice-category-btn');
         const speakEnglishBtn = document.getElementById('speak-english-btn');
         const speakChineseBtn = document.getElementById('speak-chinese-btn');
         const speakSlowlyBtn = document.getElementById('speak-slowly-btn');
@@ -902,6 +889,7 @@
         const voiceStatusText = document.getElementById('voice-status-text');
         const voiceStatusIndicator = document.getElementById('voice-status-indicator');
         const categoryButtons = document.querySelectorAll('.category-btn');
+        const categoryPracticeCount = document.getElementById('category-practice-count');
         
         // 检查浏览器是否支持语音合成
         function checkSpeechSupport() {
@@ -920,7 +908,7 @@
         
         // 从本地存储加载单词
         function loadWords() {
-            const savedWords = localStorage.getItem('pharmaceutical-english-words');
+            const savedWords = localStorage.getItem('longlai-english-words');
             if (savedWords) {
                 try {
                     words = JSON.parse(savedWords);
@@ -940,7 +928,7 @@
         
         // 保存单词到本地存储
         function saveWords() {
-            localStorage.setItem('pharmaceutical-english-words', JSON.stringify(words));
+            localStorage.setItem('longlai-english-words', JSON.stringify(words));
             updateWordCount();
             showSaveNotification();
         }
@@ -964,22 +952,40 @@
         
         // 更新筛选后的计数
         function updateFilteredCount() {
-            let filteredWords = words;
-            if (currentCategoryFilter !== 'all') {
-                filteredWords = words.filter(word => word.category === currentCategoryFilter);
-            }
+            let filteredWords = getFilteredWords();
             filteredCountElement.textContent = `${filteredWords.length}个术语`;
+            
+            // 更新分类练习统计
+            updateCategoryPracticeCount();
+        }
+        
+        // 获取当前筛选的单词列表
+        function getFilteredWords() {
+            if (currentCategoryFilter !== 'all') {
+                return words.filter(word => word.category === currentCategoryFilter);
+            }
+            return words;
+        }
+        
+        // 更新分类练习统计
+        function updateCategoryPracticeCount() {
+            let filteredWords = getFilteredWords();
+            let categoryName = currentCategoryFilter === 'all' ? '全部' : currentCategoryFilter;
+            categoryPracticeCount.textContent = `${categoryName}: ${filteredWords.length}个术语`;
+            
+            // 如果没有单词，禁用练习按钮
+            if (filteredWords.length === 0) {
+                practiceCategoryBtn.disabled = true;
+            } else {
+                practiceCategoryBtn.disabled = false;
+            }
         }
         
         // 渲染单词列表
         function renderWordList() {
             wordListElement.innerHTML = '';
             
-            // 根据分类筛选单词
-            let filteredWords = words;
-            if (currentCategoryFilter !== 'all') {
-                filteredWords = words.filter(word => word.category === currentCategoryFilter);
-            }
+            let filteredWords = getFilteredWords();
             
             if (filteredWords.length === 0) {
                 emptyListMessage.style.display = 'block';
@@ -990,8 +996,11 @@
             emptyListMessage.style.display = 'none';
             
             filteredWords.forEach((word, index) => {
+                // 查找单词在原始数组中的索引
+                const originalIndex = words.findIndex(w => w.english === word.english && w.chinese === word.chinese);
+                
                 const wordItem = document.createElement('div');
-                wordItem.className = `word-item ${currentWordIndex === words.indexOf(word) ? 'active' : ''}`;
+                wordItem.className = `word-item ${currentWordIndex === originalIndex ? 'active' : ''}`;
                 wordItem.innerHTML = `
                     <div class="word-info">
                         <div class="word-english">${word.english}</div>
@@ -999,8 +1008,11 @@
                         <div class="word-category">${word.category}</div>
                     </div>
                     <div class="word-actions">
-                        <button class="btn btn-primary learn-btn" data-id="${word.english}">
+                        <button class="btn btn-primary btn-sm learn-btn" data-id="${word.english}">
                             <i class="fas fa-play"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="${word.english}">
+                            <i class="fas fa-trash"></i>
                         </button>
                     </div>
                 `;
@@ -1010,7 +1022,8 @@
             
             // 添加事件监听器
             document.querySelectorAll('.learn-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     const english = this.getAttribute('data-id');
                     const index = words.findIndex(w => w.english === english);
                     if (index !== -1) {
@@ -1021,7 +1034,37 @@
                 });
             });
             
+            // 添加删除按钮事件监听器
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const english = this.getAttribute('data-id');
+                    deleteWordByEnglish(english);
+                });
+            });
+            
             updateFilteredCount();
+        }
+        
+        // 根据英文删除单词
+        function deleteWordByEnglish(english) {
+            if (confirm('确定要删除这个术语吗？')) {
+                const index = words.findIndex(w => w.english === english);
+                if (index !== -1) {
+                    words.splice(index, 1);
+                    saveWords();
+                    renderWordList();
+                    
+                    // 如果删除的是当前选中的单词，清空学习区域
+                    if (currentWordIndex === index) {
+                        currentWordIndex = -1;
+                        clearCurrentWordDisplay();
+                        disableSpeechButtons();
+                    } else if (currentWordIndex > index) {
+                        currentWordIndex--;
+                    }
+                }
+            }
         }
         
         // 添加新单词
@@ -1098,7 +1141,7 @@
                 <div class="current-english">${word.english}</div>
                 <div class="current-chinese">${word.chinese}</div>
                 <div class="current-category">${word.category}</div>
-                ${word.example ? `<div style="font-size: 0.9rem; color: var(--gray-color); margin-top: 10px; font-style: italic;">${word.example}</div>` : ''}
+                ${word.example ? `<div style="font-size: 0.85rem; color: var(--gray-color); margin-top: 8px; font-style: italic;">${word.example}</div>` : ''}
                 <div class="practice-count">已练习: ${word.practiceCount || 0} 次</div>
             `;
             
@@ -1141,23 +1184,6 @@
             speakEnglishBtn.disabled = true;
             speakChineseBtn.disabled = true;
             speakSlowlyBtn.disabled = true;
-        }
-        
-        // 清空所有单词
-        function clearAllWords() {
-            if (words.length === 0) {
-                alert('术语库已经是空的！');
-                return;
-            }
-            
-            if (confirm('确定要清空所有术语吗？此操作不可撤销。')) {
-                words = [];
-                saveWords();
-                renderWordList();
-                clearCurrentWordDisplay();
-                currentWordIndex = -1;
-                disableSpeechButtons();
-            }
         }
         
         // 切换到下一个单词
@@ -1279,10 +1305,12 @@
             speakText(word.english, 'en-US', 0.7);
         }
         
-        // 练习所有单词发音
-        function practiceAllWords() {
-            if (words.length === 0) {
-                alert('请先添加一些术语到术语库！');
+        // 练习当前分类的单词
+        function practiceCurrentCategory() {
+            let wordsToPractice = getFilteredWords();
+            
+            if (wordsToPractice.length === 0) {
+                alert('当前分类没有术语可练习！');
                 return;
             }
             
@@ -1291,16 +1319,30 @@
                 return;
             }
             
+            if (isPracticing) {
+                alert('练习正在进行中，请等待完成！');
+                return;
+            }
+            
+            isPracticing = true;
+            practiceCategoryBtn.disabled = true;
+            practiceCategoryBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 练习中...';
+            
             let index = 0;
             
             function speakNextWord() {
-                if (index >= words.length) {
-                    alert('所有术语练习完成！');
+                if (index >= wordsToPractice.length) {
+                    isPracticing = false;
+                    practiceCategoryBtn.disabled = false;
+                    practiceCategoryBtn.innerHTML = '<i class="fas fa-play-circle"></i> 练习当前分类';
+                    alert('当前分类练习完成！');
                     return;
                 }
                 
-                selectWord(index);
-                const word = words[index];
+                const word = wordsToPractice[index];
+                // 找到单词在原始数组中的索引
+                const originalIndex = words.findIndex(w => w.english === word.english && w.chinese === word.chinese);
+                selectWord(originalIndex);
                 
                 // 先说英语，然后说中文
                 const utteranceEnglish = new SpeechSynthesisUtterance(word.english);
@@ -1331,15 +1373,15 @@
                         }
                         
                         utteranceChinese.onend = function() {
-                            // 等待2秒后说下一个单词
+                            // 等待1.5秒后说下一个单词
                             index++;
-                            setTimeout(speakNextWord, 2000);
+                            setTimeout(speakNextWord, 1500);
                         };
                         
                         utteranceChinese.onerror = function() {
                             // 中文发音失败，继续下一个单词
                             index++;
-                            setTimeout(speakNextWord, 2000);
+                            setTimeout(speakNextWord, 1500);
                         };
                         
                         speechSynthesis.speak(utteranceChinese);
@@ -1349,7 +1391,7 @@
                 utteranceEnglish.onerror = function() {
                     // 英文发音失败，继续下一个单词
                     index++;
-                    setTimeout(speakNextWord, 2000);
+                    setTimeout(speakNextWord, 1000);
                 };
                 
                 speechSynthesis.speak(utteranceEnglish);
@@ -1437,8 +1479,7 @@
         
         // 事件监听器
         addWordBtn.addEventListener('click', addWord);
-        clearAllBtn.addEventListener('click', clearAllWords);
-        practiceAllBtn.addEventListener('click', practiceAllWords);
+        practiceCategoryBtn.addEventListener('click', practiceCurrentCategory);
         speakEnglishBtn.addEventListener('click', speakEnglish);
         speakChineseBtn.addEventListener('click', speakChinese);
         speakSlowlyBtn.addEventListener('click', speakSlowly);
@@ -1519,7 +1560,7 @@
                 disableSpeechButtons();
             }
             
-            console.log('制药英语助手已初始化，已加载', words.length, '个术语');
+            console.log('隆莱英语助手已初始化，已加载', words.length, '个术语');
         }
         
         // 页面加载完成后初始化应用
@@ -1529,6 +1570,12 @@
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
                 speechSynthesis.cancel();
+                // 如果正在练习，重置状态
+                if (isPracticing) {
+                    isPracticing = false;
+                    practiceCategoryBtn.disabled = false;
+                    practiceCategoryBtn.innerHTML = '<i class="fas fa-play-circle"></i> 练习当前分类';
+                }
             }
         });
     </script>
