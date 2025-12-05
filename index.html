@@ -14,9 +14,8 @@
             --warning-color: #f39c12;
             --light-color: #ecf0f1;
             --dark-color: #2c3e50;
-            --favorite-color: #e74c3c;
-            --edit-color: #9b59b6;
             --gray-color: #7f8c8d;
+            --favorite-color: #e74c3c;
             --border-radius: 4px;
             --box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
             --transition: all 0.15s ease;
@@ -232,7 +231,7 @@
         }
         
         .btn-secondary {
-            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            background: linear-gradient(135deg, var(--gray-color) 0%, #5d6d7e 100%);
             color: white;
         }
         
@@ -248,11 +247,6 @@
         
         .btn-favorite {
             background: linear-gradient(135deg, var(--favorite-color) 0%, #c0392b 100%);
-            color: white;
-        }
-        
-        .btn-edit {
-            background: linear-gradient(135deg, var(--edit-color) 0%, #8e44ad 100%);
             color: white;
         }
         
@@ -760,176 +754,6 @@
         .difficulty-hard {
             background-color: var(--danger-color);
         }
-        
-        /* 编辑模式 */
-        .edit-mode {
-            background-color: #fff9e6;
-        }
-        
-        /* 模态框 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal.active {
-            display: flex;
-        }
-        
-        .modal-content {
-            background-color: white;
-            border-radius: var(--border-radius);
-            width: 90%;
-            max-width: 400px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        .modal-header {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .modal-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
-        
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--gray-color);
-        }
-        
-        .modal-body {
-            padding: 15px;
-        }
-        
-        /* 术语库管理 */
-        .library-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        
-        .library-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--secondary-color);
-        }
-        
-        .stat-label {
-            font-size: 0.7rem;
-            color: var(--gray-color);
-        }
-        
-        /* 收藏夹分类标签 */
-        .favorite-tag {
-            display: inline-block;
-            padding: 1px 5px;
-            border-radius: 8px;
-            font-size: 0.6rem;
-            margin-left: 5px;
-            background-color: #f0f0f0;
-            color: #666;
-        }
-        
-        /* 编辑表单 */
-        .edit-form {
-            margin-top: 10px;
-        }
-        
-        /* 单独发音按钮组 */
-        .individual-pronunciation {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-            margin-top: 8px;
-        }
-        
-        /* 收藏夹操作按钮 */
-        .favorite-actions {
-            display: flex;
-            gap: 4px;
-            margin-top: 10px;
-        }
-        
-        /* 跟读输入框 */
-        .shadowing-input {
-            margin-top: 10px;
-            display: none;
-        }
-        
-        .shadowing-input.active {
-            display: block;
-        }
-        
-        .input-group {
-            display: flex;
-            gap: 5px;
-        }
-        
-        .input-group input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #e1e5eb;
-            border-radius: 3px;
-            font-size: 0.8rem;
-        }
-        
-        .shadowing-tips {
-            margin-top: 10px;
-            padding: 8px;
-            background-color: #f8f9fa;
-            border-radius: 3px;
-            border-left: 2px solid var(--warning-color);
-            font-size: 0.75rem;
-        }
-        
-        .shadowing-tips-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--dark-color);
-        }
-        
-        /* 移动端优化 */
-        .mobile-hint {
-            background-color: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 3px;
-            padding: 8px;
-            margin-top: 8px;
-            font-size: 0.75rem;
-            color: #856404;
-        }
     </style>
 </head>
 <body>
@@ -958,9 +782,6 @@
             </button>
             <button class="tab-button" data-tab="favorites-tab">
                 <i class="fas fa-star"></i> 收藏
-            </button>
-            <button class="tab-button" data-tab="library-tab">
-                <i class="fas fa-book"></i> 术语库
             </button>
         </div>
         
@@ -992,6 +813,7 @@
                             <i class="fas fa-tag"></i> 分类
                         </label>
                         <select id="category-input" class="form-select">
+                            <option value="常用词语">常用词语</option>
                             <option value="研发与工艺">研发与工艺</option>
                             <option value="分析检测与质量控制">分析检测与质量控制</option>
                             <option value="设施与区域">设施与区域</option>
@@ -1000,7 +822,6 @@
                             <option value="法规与注册">法规与注册</option>
                             <option value="EHS与供应链">EHS与供应链</option>
                             <option value="综合管理">综合管理</option>
-                            <option value="常用词语">常用词语</option>
                         </select>
                     </div>
                     
@@ -1012,17 +833,6 @@
                                placeholder="可添加例句或说明" maxlength="150">
                     </div>
                     
-                    <div class="form-group">
-                        <label class="form-label" for="difficulty-input">
-                            <i class="fas fa-signal"></i> 难度
-                        </label>
-                        <select id="difficulty-input" class="form-select">
-                            <option value="easy">简单</option>
-                            <option value="medium" selected>中等</option>
-                            <option value="hard">困难</option>
-                        </select>
-                    </div>
-                    
                     <button id="add-word-btn" class="btn btn-primary">
                         <i class="fas fa-save"></i> 保存术语
                     </button>
@@ -1032,7 +842,6 @@
                             <i class="fas fa-lightbulb"></i> 提示
                         </div>
                         <p>添加的术语会自动保存到本地，无需网络连接，数据不会丢失。</p>
-                        <p>在中文释义中，使用"/"会被读成"或"，例如："生产/制造"会读成"生产或制造"。</p>
                     </div>
                 </div>
             </div>
@@ -1048,6 +857,7 @@
                     <!-- 分类筛选 -->
                     <div class="category-filter">
                         <button class="category-btn active" data-category="all">全部</button>
+                        <button class="category-btn" data-category="常用词语">常用词语</button>
                         <button class="category-btn" data-category="研发与工艺">研发工艺</button>
                         <button class="category-btn" data-category="分析检测与质量控制">分析质控</button>
                         <button class="category-btn" data-category="设施与区域">设施区域</button>
@@ -1056,7 +866,6 @@
                         <button class="category-btn" data-category="法规与注册">法规注册</button>
                         <button class="category-btn" data-category="EHS与供应链">EHS供应链</button>
                         <button class="category-btn" data-category="综合管理">综合管理</button>
-                        <button class="category-btn" data-category="常用词语">常用词语</button>
                         <button class="category-btn" data-category="favorite">收藏</button>
                     </div>
                     
@@ -1160,41 +969,9 @@
                             </button>
                         </div>
                         
-                        <!-- 跟读输入框 -->
-                        <div class="shadowing-input" id="shadowing-input">
-                            <div class="input-group">
-                                <input type="text" id="shadowing-text-input" placeholder="请输入您听到的英文术语">
-                                <button id="check-pronunciation-btn" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-check"></i> 检查
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="shadowing-result" id="shadowing-result">
+                        <div id="shadowing-result" class="shadowing-result">
                             <div id="shadowing-result-text"></div>
                             <div id="shadowing-feedback" class="shadowing-feedback"></div>
-                        </div>
-                        
-                        <!-- 移动端提示 -->
-                        <div class="mobile-hint" id="mobile-hint" style="display: none;">
-                            <div class="shadowing-tips-title">
-                                <i class="fas fa-mobile-alt"></i> 移动端使用提示
-                            </div>
-                            <p>• 请确保允许浏览器使用麦克风权限</p>
-                            <p>• 建议在安静环境下进行跟读</p>
-                            <p>• 如果语音识别失败，可以使用手动输入功能</p>
-                        </div>
-                        
-                        <!-- 手动输入切换 -->
-                        <div class="shadowing-tips">
-                            <div class="shadowing-tips-title">
-                                <i class="fas fa-info-circle"></i> 跟读提示
-                            </div>
-                            <p>• 点击"开始跟读"后，请清晰朗读英文术语</p>
-                            <p>• 如果语音识别不工作，可以点击下方按钮使用手动输入</p>
-                            <button id="toggle-input-mode-btn" class="btn btn-secondary btn-sm" style="margin-top: 5px; width: 100%;">
-                                <i class="fas fa-keyboard"></i> 切换为手动输入模式
-                            </button>
                         </div>
                     </div>
                     
@@ -1246,15 +1023,6 @@
                         </div>
                     </div>
                     
-                    <div class="favorite-actions">
-                        <button id="clear-favorites-btn" class="btn btn-danger">
-                            <i class="fas fa-trash"></i> 清空收藏夹
-                        </button>
-                        <button id="export-favorites-btn" class="btn btn-success">
-                            <i class="fas fa-download"></i> 导出收藏夹
-                        </button>
-                    </div>
-                    
                     <div class="hint" style="margin-top: 10px;">
                         <div class="hint-title">
                             <i class="fas fa-lightbulb"></i> 收藏夹使用建议
@@ -1265,222 +1033,11 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- 术语库管理选项卡 -->
-            <div id="library-tab" class="tab-content">
-                <div class="card">
-                    <div class="card-title">
-                        <span><i class="fas fa-book"></i> 术语库管理</span>
-                        <span id="library-count">0个术语</span>
-                    </div>
-                    
-                    <div class="library-stats">
-                        <div class="stat-item">
-                            <div class="stat-value" id="total-words">0</div>
-                            <div class="stat-label">总术语</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="favorite-words">0</div>
-                            <div class="stat-label">已收藏</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="difficult-words">0</div>
-                            <div class="stat-label">困难术语</div>
-                        </div>
-                    </div>
-                    
-                    <div class="library-actions">
-                        <button id="export-library-btn" class="btn btn-success">
-                            <i class="fas fa-download"></i> 导出术语库
-                        </button>
-                        <button id="import-library-btn" class="btn btn-primary">
-                            <i class="fas fa-upload"></i> 导入术语库
-                        </button>
-                        <button id="reset-library-btn" class="btn btn-danger">
-                            <i class="fas fa-redo"></i> 重置术语库
-                        </button>
-                        <button id="backup-library-btn" class="btn btn-secondary">
-                            <i class="fas fa-save"></i> 备份数据
-                        </button>
-                    </div>
-                    
-                    <div class="hint" style="margin-top: 10px;">
-                        <div class="hint-title">
-                            <i class="fas fa-info-circle"></i> 术语库管理说明
-                        </div>
-                        <p>• 导出术语库：将当前术语库导出为JSON文件</p>
-                        <p>• 导入术语库：从JSON文件导入术语数据</p>
-                        <p>• 重置术语库：恢复为默认的制药行业术语库</p>
-                        <p>• 备份数据：将数据备份到浏览器本地存储</p>
-                    </div>
-                    
-                    <div class="word-list-container" id="library-list" style="max-height: 300px; margin-top: 15px;">
-                        <!-- 术语库列表将在这里动态生成 -->
-                        <div class="empty-state" id="empty-library-message">
-                            <i class="fas fa-book"></i>
-                            <p>术语库为空</p>
-                        </div>
-                    </div>
-                    
-                    <div class="hint" style="margin-top: 10px;">
-                        <div class="hint-title">
-                            <i class="fas fa-edit"></i> 编辑说明
-                        </div>
-                        <p>点击术语可以查看和编辑详细信息</p>
-                    </div>
-                </div>
-            </div>
         </main>
         
         <!-- 保存成功提示 -->
         <div id="save-notification" class="save-notification">
             <i class="fas fa-check-circle"></i> 术语已保存
-        </div>
-        
-        <!-- 编辑单词模态框 -->
-        <div id="edit-word-modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title">
-                        <i class="fas fa-edit"></i> 编辑术语
-                    </div>
-                    <button class="modal-close" id="close-edit-modal">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="edit-form">
-                        <div class="form-group">
-                            <label class="form-label" for="edit-english-input">
-                                <i class="fas fa-font"></i> 英文术语
-                            </label>
-                            <input type="text" id="edit-english-input" class="form-input" 
-                                   maxlength="100">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="edit-chinese-input">
-                                <i class="fas fa-language"></i> 中文释义
-                            </label>
-                            <input type="text" id="edit-chinese-input" class="form-input" 
-                                   maxlength="100">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="edit-category-input">
-                                <i class="fas fa-tag"></i> 分类
-                            </label>
-                            <select id="edit-category-input" class="form-select">
-                                <option value="研发与工艺">研发与工艺</option>
-                                <option value="分析检测与质量控制">分析检测与质量控制</option>
-                                <option value="设施与区域">设施与区域</option>
-                                <option value="生产与设备">生产与设备</option>
-                                <option value="质量体系与GMP">质量体系与GMP</option>
-                                <option value="法规与注册">法规与注册</option>
-                                <option value="EHS与供应链">EHS与供应链</option>
-                                <option value="综合管理">综合管理</option>
-                                <option value="常用词语">常用词语</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="edit-example-input">
-                                <i class="fas fa-comment-alt"></i> 备注 (可选)
-                            </label>
-                            <input type="text" id="edit-example-input" class="form-input" 
-                                   maxlength="150">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="edit-difficulty-input">
-                                <i class="fas fa-signal"></i> 难度
-                            </label>
-                            <select id="edit-difficulty-input" class="form-select">
-                                <option value="easy">简单</option>
-                                <option value="medium">中等</option>
-                                <option value="hard">困难</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-star"></i> 收藏设置
-                            </label>
-                            <div style="display: flex; gap: 10px; margin-top: 5px;">
-                                <button id="edit-favorite-toggle" class="btn btn-sm" style="flex: 1;">
-                                    <i class="far fa-star"></i> 收藏
-                                </button>
-                                <select id="edit-favorite-category" class="form-select" style="flex: 2;">
-                                    <option value="">选择收藏分类</option>
-                                    <option value="发音困难">发音困难</option>
-                                    <option value="容易混淆">容易混淆</option>
-                                    <option value="重点记忆">重点记忆</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="individual-pronunciation" style="margin-top: 10px;">
-                            <button id="edit-speak-english-btn" class="btn btn-primary btn-sm">
-                                <i class="fas fa-volume-up"></i> 英文
-                            </button>
-                            <button id="edit-speak-chinese-btn" class="btn btn-primary btn-sm">
-                                <i class="fas fa-volume-up"></i> 中文
-                            </button>
-                            <button id="edit-speak-slowly-btn" class="btn btn-success btn-sm">
-                                <i class="fas fa-tachometer-alt"></i> 慢速
-                            </button>
-                        </div>
-                        
-                        <div class="bottom-actions" style="margin-top: 15px;">
-                            <button id="save-edit-btn" class="btn btn-primary">
-                                <i class="fas fa-save"></i> 保存更改
-                            </button>
-                            <button id="delete-edit-btn" class="btn btn-danger">
-                                <i class="fas fa-trash"></i> 删除术语
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 导入数据模态框 -->
-        <div id="import-modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title">
-                        <i class="fas fa-upload"></i> 导入术语库
-                    </div>
-                    <button class="modal-close" id="close-import-modal">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-file-import"></i> 选择JSON文件
-                        </label>
-                        <input type="file" id="import-file-input" class="form-input" accept=".json">
-                    </div>
-                    
-                    <div class="hint" style="margin-top: 10px;">
-                        <div class="hint-title">
-                            <i class="fas fa-info-circle"></i> 导入说明
-                        </div>
-                        <p>请选择之前导出的术语库JSON文件</p>
-                        <p>导入会覆盖当前所有数据，请先备份</p>
-                    </div>
-                    
-                    <div class="bottom-actions" style="margin-top: 15px;">
-                        <button id="confirm-import-btn" class="btn btn-primary" disabled>
-                            <i class="fas fa-check"></i> 确认导入
-                        </button>
-                        <button id="cancel-import-btn" class="btn btn-secondary">
-                            <i class="fas fa-times"></i> 取消
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1498,11 +1055,111 @@
         let speakingWordIndex = -1;
         let currentCategoryFilter = 'all';
         let currentFavoriteCategoryFilter = 'all';
-        let editingWordIndex = -1;
-        let isInputMode = false; // 是否手动输入模式
         
-        // 制药行业词汇数据 - 已整合所有词汇并去重
+        // 制药行业词汇数据
         const pharmaceuticalTerms = [
+            // 常用词语
+            { english: "quality management", chinese: "质量管理", category: "常用词语", example: "" },
+{ english: "quality inspection", chinese: "质量检验", category: "常用词语", example: "" },
+{ english: "process", chinese: "工序", category: "常用词语", example: "" },
+{ english: "contamination", chinese: "污染", category: "常用词语", example: "" },
+{ english: "cross-contamination", chinese: "交叉污染", category: "常用词语", example: "" },
+{ english: "buildings and facilities", chinese: "厂房与设施", category: "常用词语", example: "" },
+{ english: "production environment", chinese: "生产环境", category: "常用词语", example: "" },
+{ english: "clean air level", chinese: "空气洁净级别", category: "常用词语", example: "" },
+{ english: "insect", chinese: "昆虫", category: "常用词语", example: "" },
+{ english: "clean room(area)", chinese: "洁净室（区）", category: "常用词语", example: "" },
+{ english: "disinfection", chinese: "消毒", category: "常用词语", example: "" },
+{ english: "sterile", chinese: "无菌", category: "常用词语", example: "" },
+{ english: "dust accumulation", chinese: "灰尘积聚", category: "常用词语", example: "" },
+{ english: "production scale", chinese: "生产规模", category: "常用词语", example: "" },
+{ english: "store area", chinese: "储存区", category: "常用词语", example: "" },
+{ english: "equipment", chinese: "设备", category: "常用词语", example: "" },
+{ english: "material", chinese: "物料", category: "常用词语", example: "" },
+{ english: "raw material and incipient", chinese: "原辅料", category: "常用词语", example: "" },
+{ english: "intermediate product", chinese: "中间产品", category: "常用词语", example: "" },
+{ english: "finished product", chinese: "成品", category: "常用词语", example: "" },
+{ english: "quarantined material", chinese: "待验品", category: "常用词语", example: "" },
+{ english: "pipeline", chinese: "管道", category: "常用词语", example: "" },
+{ english: "utilities of public service", chinese: "公用设施, 公用工程", category: "常用词语", example: "" },
+{ english: "lighting", chinese: "照明", category: "常用词语", example: "" },
+{ english: "purification", chinese: "净化", category: "常用词语", example: "" },
+{ english: "micro-organism", chinese: "微生物", category: "常用词语", example: "" },
+{ english: "monitoring", chinese: "监测", category: "常用词语", example: "" },
+{ english: "record", chinese: "记录", category: "常用词语", example: "" },
+{ english: "seal", chinese: "密封", category: "常用词语", example: "" },
+{ english: "ceiling", chinese: "天花板", category: "常用词语", example: "" },
+{ english: "temperature", chinese: "温度", category: "常用词语", example: "" },
+{ english: "RH: Relative Humidity", chinese: "相对湿度", category: "常用词语", example: "" },
+{ english: "floor drain", chinese: "地漏", category: "常用词语", example: "" },
+{ english: "distribution room", chinese: "分装室", category: "常用词语", example: "" },
+{ english: "package", chinese: "包装", category: "常用词语", example: "" },
+{ english: "bacteria", chinese: "细菌", category: "常用词语", example: "" },
+{ english: "pretreatment", chinese: "前处理", category: "常用词语", example: "" },
+{ english: "ventilation", chinese: "通风", category: "常用词语", example: "" },
+{ english: "Sampling", chinese: "取样", category: "常用词语", example: "" },
+{ english: "weighing room", chinese: "称量室", category: "常用词语", example: "" },
+{ english: "verification", chinese: "检定 验证", category: "常用词语", example: "" },
+{ english: "equipment", chinese: "设备", category: "常用词语", example: "" },
+{ english: "PW: Purified Water", chinese: "纯化水", category: "常用词语", example: "" },
+{ english: "tank", chinese: "储罐", category: "常用词语", example: "" },
+{ english: "measuring tool", chinese: "量具", category: "常用词语", example: "" },
+{ english: "weighing instrument", chinese: "衡器", category: "常用词语", example: "" },
+{ english: "maintenance", chinese: "维修、保养", category: "常用词语", example: "" },
+{ english: "disqualified, reject, non-conforming", chinese: "不合格", category: "常用词语", example: "" },
+{ english: "purchasing", chinese: "购买", category: "常用词语", example: "" },
+{ english: "releasing", chinese: "发放", category: "常用词语", example: "" },
+{ english: "loading", chinese: "入库", category: "常用词语", example: "" },
+{ english: "solid", chinese: "固体", category: "常用词语", example: "" },
+{ english: "liquid", chinese: "液体", category: "常用词语", example: "" },
+{ english: "acceptance", chinese: "验收", category: "常用词语", example: "" },
+{ english: "combustible", chinese: "易燃", category: "常用词语", example: "" },
+{ english: "explosive", chinese: "易爆", category: "常用词语", example: "" },
+{ english: "instruction", chinese: "使用说明书", category: "常用词语", example: "" },
+{ english: "label", chinese: "标签", category: "常用词语", example: "" },
+{ english: "sanitation", chinese: "卫生, 清洁/消毒", category: "常用词语", example: "" },
+{ english: "workshop", chinese: "车间", category: "常用词语", example: "" },
+{ english: "time interval", chinese: "间隔时间", category: "常用词语", example: "" },
+{ english: "detergent", chinese: "清洁剂", category: "常用词语", example: "" },
+{ english: "disinfectant", chinese: "消毒剂", category: "常用词语", example: "" },
+{ english: "wastes", chinese: "废弃物", category: "常用词语", example: "" },
+{ english: "changing room", chinese: "更衣室", category: "常用词语", example: "" },
+{ english: "work clothes", chinese: "工作服", category: "常用词语", example: "" },
+{ english: "verification, validation", chinese: "验证", category: "常用词语", example: "" },
+{ english: "qualification", chinese: "确认", category: "常用词语", example: "" },
+{ english: "installation", chinese: "安装", category: "常用词语", example: "" },
+{ english: "running operation", chinese: "运行", category: "常用词语", example: "" },
+{ english: "document", chinese: "文件", category: "常用词语", example: "" },
+{ english: "complaint", chinese: "投诉", category: "常用词语", example: "" },
+{ english: "product name", chinese: "品名", category: "常用词语", example: "" },
+{ english: "container", chinese: "容器", category: "常用词语", example: "" },
+{ english: "application", chinese: "申请", category: "常用词语", example: "" },
+{ english: "stability", chinese: "稳定性", category: "常用词语", example: "" },
+{ english: "draft", chinese: "起草", category: "常用词语", example: "" },
+{ english: "production management", chinese: "生产管理", category: "常用词语", example: "" },
+{ english: "certificate", chinese: "合格证", category: "常用词语", example: "" },
+{ english: "clearance", chinese: "清场", category: "常用词语", example: "" },
+{ english: "internal control", chinese: "内控", category: "常用词语", example: "" },
+{ english: "validity, expiry date, shelf life", chinese: "有效期", category: "常用词语", example: "" },
+{ english: "product sales and recall", chinese: "产品销售与召回", category: "常用词语", example: "" },
+{ english: "complaints", chinese: "投诉", category: "常用词语", example: "" },
+{ english: "self-inspection", chinese: "自检", category: "常用词语", example: "" },
+{ english: "balance", chinese: "平衡、天平", category: "常用词语", example: "" },
+{ english: "drinking water", chinese: "饮用水", category: "常用词语", example: "" },
+{ english: "batch", chinese: "批", category: "常用词语", example: "" },
+{ english: "batch number", chinese: "批号", category: "常用词语", example: "" },
+{ english: "in-process control", chinese: "中控", category: "常用词语", example: "" },
+{ english: "Theoretical yield", chinese: "理论产量", category: "常用词语", example: "" },
+{ english: "Actual yield", chinese: "实际产量", category: "常用词语", example: "" },
+{ english: "rate", chinese: "比率", category: "常用词语", example: "" },
+{ english: "Acceptance criteria", chinese: "验收标准可接受标准", category: "常用词语", example: "" },
+{ english: "contaminant", chinese: "污染物", category: "常用词语", example: "" },
+{ english: "preparation", chinese: "制备", category: "常用词语", example: "" },
+{ english: "blend", chinese: "混合", category: "常用词语", example: "" },
+{ english: "processing", chinese: "加工", category: "常用词语", example: "" },
+{ english: "concentration", chinese: "浓度", category: "常用词语", example: "" },
+{ english: "purity", chinese: "纯度", category: "常用词语", example: "" },
+            
             // 研发与工艺
             { english: "CMC", chinese: "化学、制造与控制", category: "研发与工艺", example: "", difficulty: "easy" },
             { english: "Synthetic Route", chinese: "合成路线", category: "研发与工艺", example: "", difficulty: "medium" },
@@ -1545,67 +1202,73 @@
             { english: "Quality Analysis Room", chinese: "质量部分析室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Backup Power/Power Distribution Room", chinese: "备用电源/配电室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Sampling Room", chinese: "样品接收室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Glassware Room", chinese: "玻璃器皿室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Balance Room", chinese: "天平室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Distribution Cabinet", chinese: "配电柜", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Sample Preparation Room", chinese: "配样室", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Glassware room", chinese: "玻璃器皿室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Balance Room", chinese: "天平室I", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Distribution cabinet", chinese: "配电柜", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Sample preparation Room", chinese: "配样室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "HPLC Room", chinese: "液相分析室", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Sample preparation Room", chinese: "配样室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "High Temperature Room", chinese: "高温室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Comprehensive Instrument Room", chinese: "综合仪器室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "IR Room", chinese: "红外分析室", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "HPLC Room", chinese: "液相分析室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Moisture Measurement Room", chinese: "水分分析室", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Balance Room", chinese: "天平室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "GC Room", chinese: "气相分析室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Physicochemical Analysis Room", chinese: "理化室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Locker Room", chinese: "更衣室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Source Gas Room", chinese: "气源室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "QC Office", chinese: "QC办公室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Vice President's Office", chinese: "副总办公室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Director's Office", chinese: "总监办公室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Glove Box Room", chinese: "手套箱室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Mother and Child Rooms", chinese: "母婴室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Source gas Room", chinese: "气源室", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "QC office", chinese: "QC办公室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Vice president's office", chinese: "副总办公室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Director‘s office", chinese: "总监办公室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Glove box Room", chinese: "手套箱室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Mother and child Rooms", chinese: "母婴室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Power Distribution Room", chinese: "配电室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Psychz", chinese: "机房", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Storage Room", chinese: "储物间", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Storage room", chinese: "储物间", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Cleaning Tools Room", chinese: "洁具间", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Generator Room", chinese: "发电机房", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Pantry Room", chinese: "茶水间", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Dressing Room", chinese: "访客更衣室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Men's Room", chinese: "男卫生间", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Men's room", chinese: "男卫生间", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Staircase", chinese: "楼梯间", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "R&D Laboratory", chinese: "实验室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Magnification Stage Laboratory", chinese: "公斤级实验室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Standard/Reference Substance Room", chinese: "标准/对照品室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Storage Room for Consumables", chinese: "耗材存放间", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Standard/reference substance Room", chinese: "标准/对照品室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Storage room for consumables", chinese: "耗材存放间", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Reagent Room", chinese: "试剂间", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "IT Server", chinese: "网络服务器", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Titration Analysis Room", chinese: "滴定分析室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Cool Storage Room", chinese: "阴凉暂存间", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Titration analysis Room", chinese: "滴定分析室", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Cool storage Room", chinese: "阴凉暂存间", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Sample Retention Room", chinese: "留样室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Microbiological Lab", chinese: "微生物实验室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Shoes Changing Room", chinese: "换鞋室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Microbiolgical Lab", chinese: "微生物实验室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Shoes Changning Room", chinese: "换鞋室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Negative Gowning Room", chinese: "阴性一更", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Negative Gowning Room II", chinese: "阴性二更", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Negative Disinfection Room", chinese: "阴性消毒室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Negative Gowning Room", chinese: "阴性二更", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Negative disinfection Room", chinese: "阴性消毒室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Buffer Room", chinese: "缓冲间", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "Micro Testing Room", chinese: "微生物检测", category: "设施与区域", example: "", difficulty: "medium" },
+            { english: "Micro.Testing Room", chinese: "微生物检测", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Positive Gowning Room I", chinese: "阳性一更", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Positive Disinfection Room", chinese: "阳性消毒室", category: "设施与区域", example: "", difficulty: "hard" },
-            { english: "Positive Bacterial Room", chinese: "阳性菌室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Positive disinfection Room", chinese: "阳性消毒室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Positive bacterial Room", chinese: "阳性菌室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "Preparation Room", chinese: "准备室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Incubation Room", chinese: "培养室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Culture Medium/Strain Storage Room", chinese: "培养基/菌种存放室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Culture medium/strain storage Room", chinese: "培养基/菌种存放室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Preparation Room", chinese: "配制室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Sterilizing Room", chinese: "灭菌室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Storage Room", chinese: "仪器/耗材存放室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Microbiology Office", chinese: "微生物办公室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "Microbiology office", chinese: "微生物办公室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Stability Lab", chinese: "稳定性实验室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Meeting Room", chinese: "会议室", category: "设施与区域", example: "", difficulty: "easy" },
-            { english: "QA Office", chinese: "QA办公室", category: "设施与区域", example: "", difficulty: "easy" },
+            { english: "QA office", chinese: "QA办公室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "Archives", chinese: "档案室", category: "设施与区域", example: "", difficulty: "easy" },
             { english: "R&D Analysis Room", chinese: "研发分析室", category: "设施与区域", example: "", difficulty: "medium" },
-            { english: "Source Gas/Mechanical Pump Room", chinese: "气源/机械泵室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Physicochemical Analysis Room", chinese: "理化室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "Source gas/mechanical pump room", chinese: "气源/机械泵室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "PSD Room", chinese: "PSD分析室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "ICP-MS Room", chinese: "ICP-MS分析室", category: "设施与区域", example: "", difficulty: "hard" },
             { english: "XRD Room", chinese: "XRD分析室", category: "设施与区域", example: "", difficulty: "hard" },
+            { english: "IR Room", chinese: "IR分析室", category: "设施与区域", example: "", difficulty: "medium" },
             { english: "Drying Room", chinese: "烘箱室", category: "设施与区域", example: "", difficulty: "easy" },
             
             // 生产与设备
@@ -1664,107 +1327,7 @@
             { english: "Batch Number / Lot Number", chinese: "批号", category: "综合管理", example: "", difficulty: "easy" },
             { english: "Expiry Date / Retest Date", chinese: "有效期/复验期", category: "综合管理", example: "", difficulty: "medium" },
             { english: "Quarantine / Release", chinese: "待检/放行", category: "综合管理", example: "", difficulty: "medium" },
-            { english: "Traceability", chinese: "可追溯性", category: "综合管理", example: "", difficulty: "hard" },
-            
-            // 常用词语
-            { english: "Quality Management", chinese: "质量管理", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Quality Inspection", chinese: "质量检验", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Process", chinese: "工序", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Contamination", chinese: "污染", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Cross-contamination", chinese: "交叉污染", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Buildings and Facilities", chinese: "厂房与设施", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Production Environment", chinese: "生产环境", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Clean Air Level", chinese: "空气洁净级别", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Insect", chinese: "昆虫", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Clean Room (Area)", chinese: "洁净室（区）", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Disinfection", chinese: "消毒", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Sterile", chinese: "无菌", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Dust Accumulation", chinese: "灰尘积聚", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Production Scale", chinese: "生产规模", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Store Area", chinese: "储存区", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Material", chinese: "物料", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Raw Material and Incipient", chinese: "原辅料", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Intermediate Product", chinese: "中间产品", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Finished Product", chinese: "成品", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Quarantined Material", chinese: "待验品", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Pipeline", chinese: "管道", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Utilities of Public Service", chinese: "公用设施, 公用工程", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Lighting", chinese: "照明", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Purification", chinese: "净化", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Micro-organism", chinese: "微生物", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Monitoring", chinese: "监测", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Record", chinese: "记录", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Seal", chinese: "密封", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Ceiling", chinese: "天花板", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Temperature", chinese: "温度", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "RH: Relative Humidity", chinese: "相对湿度", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Floor Drain", chinese: "地漏", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Distribution Room", chinese: "分装室", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Package", chinese: "包装", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Bacteria", chinese: "细菌", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Pretreatment", chinese: "前处理", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Ventilation", chinese: "通风", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Sampling", chinese: "取样", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Weighing Room", chinese: "称量室", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Verification", chinese: "检定 验证", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "PW: Purified Water", chinese: "纯化水", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Tank", chinese: "储罐", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Measuring Tool", chinese: "量具", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Weighing Instrument", chinese: "衡器", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Maintenance", chinese: "维修、保养", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Disqualified, Reject, Non-conforming", chinese: "不合格", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Purchasing", chinese: "购买", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Releasing", chinese: "发放", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Loading", chinese: "入库", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Solid", chinese: "固体", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Liquid", chinese: "液体", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Acceptance", chinese: "验收", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Combustible", chinese: "易燃", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Explosive", chinese: "易爆", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Instruction", chinese: "使用说明书", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Label", chinese: "标签", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Sanitation", chinese: "卫生, 清洁/消毒", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Workshop", chinese: "车间", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Time Interval", chinese: "间隔时间", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Detergent", chinese: "清洁剂", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Disinfectant", chinese: "消毒剂", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Wastes", chinese: "废弃物", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Changing Room", chinese: "更衣室", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Work Clothes", chinese: "工作服", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Verification, Validation", chinese: "验证", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Qualification", chinese: "确认", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Installation", chinese: "安装", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Running Operation", chinese: "运行", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Document", chinese: "文件", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Complaint", chinese: "投诉", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Product Name", chinese: "品名", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Container", chinese: "容器", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Application", chinese: "申请", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Stability", chinese: "稳定性", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Draft", chinese: "起草", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Production Management", chinese: "生产管理", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Certificate", chinese: "合格证", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Clearance", chinese: "清场", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Internal Control", chinese: "内控", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Validity, Expiry Date, Shelf Life", chinese: "有效期", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Product Sales and Recall", chinese: "产品销售与召回", category: "常用词语", example: "", difficulty: "hard" },
-            { english: "Complaints", chinese: "投诉", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Self-inspection", chinese: "自检", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Balance", chinese: "平衡、天平", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Drinking Water", chinese: "饮用水", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Batch", chinese: "批", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Batch Number", chinese: "批号", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "In-process Control", chinese: "中控", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Theoretical Yield", chinese: "理论产量", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Actual Yield", chinese: "实际产量", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Rate", chinese: "比率", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Acceptance Criteria", chinese: "验收标准可接受标准", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Contaminant", chinese: "污染物", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Preparation", chinese: "制备", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Blend", chinese: "混合", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Processing", chinese: "加工", category: "常用词语", example: "", difficulty: "easy" },
-            { english: "Concentration", chinese: "浓度", category: "常用词语", example: "", difficulty: "medium" },
-            { english: "Purity", chinese: "纯度", category: "常用词语", example: "", difficulty: "medium" }
+            { english: "Traceability", chinese: "可追溯性", category: "综合管理", example: "", difficulty: "hard" }
         ];
         
         // DOM元素
@@ -1772,7 +1335,6 @@
         const chineseInput = document.getElementById('chinese-input');
         const exampleInput = document.getElementById('example-input');
         const categoryInput = document.getElementById('category-input');
-        const difficultyInput = document.getElementById('difficulty-input');
         const addWordBtn = document.getElementById('add-word-btn');
         const wordListElement = document.getElementById('word-list');
         const emptyListMessage = document.getElementById('empty-list-message');
@@ -1813,42 +1375,6 @@
         const favoritesCountTab = document.getElementById('favorites-count');
         const favoritesPracticeCount = document.getElementById('favorites-practice-count');
         const favoriteCategoryButtons = document.querySelectorAll('[data-favorite-category]');
-        const clearFavoritesBtn = document.getElementById('clear-favorites-btn');
-        const exportFavoritesBtn = document.getElementById('export-favorites-btn');
-        const libraryCountElement = document.getElementById('library-count');
-        const totalWordsElement = document.getElementById('total-words');
-        const favoriteWordsElement = document.getElementById('favorite-words');
-        const difficultWordsElement = document.getElementById('difficult-words');
-        const exportLibraryBtn = document.getElementById('export-library-btn');
-        const importLibraryBtn = document.getElementById('import-library-btn');
-        const resetLibraryBtn = document.getElementById('reset-library-btn');
-        const backupLibraryBtn = document.getElementById('backup-library-btn');
-        const libraryListElement = document.getElementById('library-list');
-        const emptyLibraryMessage = document.getElementById('empty-library-message');
-        const editWordModal = document.getElementById('edit-word-modal');
-        const closeEditModal = document.getElementById('close-edit-modal');
-        const editEnglishInput = document.getElementById('edit-english-input');
-        const editChineseInput = document.getElementById('edit-chinese-input');
-        const editCategoryInput = document.getElementById('edit-category-input');
-        const editExampleInput = document.getElementById('edit-example-input');
-        const editDifficultyInput = document.getElementById('edit-difficulty-input');
-        const editFavoriteToggle = document.getElementById('edit-favorite-toggle');
-        const editFavoriteCategory = document.getElementById('edit-favorite-category');
-        const editSpeakEnglishBtn = document.getElementById('edit-speak-english-btn');
-        const editSpeakChineseBtn = document.getElementById('edit-speak-chinese-btn');
-        const editSpeakSlowlyBtn = document.getElementById('edit-speak-slowly-btn');
-        const saveEditBtn = document.getElementById('save-edit-btn');
-        const deleteEditBtn = document.getElementById('delete-edit-btn');
-        const importModal = document.getElementById('import-modal');
-        const closeImportModal = document.getElementById('close-import-modal');
-        const importFileInput = document.getElementById('import-file-input');
-        const confirmImportBtn = document.getElementById('confirm-import-btn');
-        const cancelImportBtn = document.getElementById('cancel-import-btn');
-        const shadowingInput = document.getElementById('shadowing-input');
-        const shadowingTextInput = document.getElementById('shadowing-text-input');
-        const checkPronunciationBtn = document.getElementById('check-pronunciation-btn');
-        const toggleInputModeBtn = document.getElementById('toggle-input-mode-btn');
-        const mobileHint = document.getElementById('mobile-hint');
         
         // 检查浏览器是否支持语音合成和语音识别
         function checkSpeechSupport() {
@@ -1866,44 +1392,23 @@
                 voiceStatusIndicator.className = "voice-status-indicator";
             }
             
-            // 初始化语音识别（如果支持）
+            // 初始化语音识别
             if (isSpeechRecognitionSupported) {
-                initializeSpeechRecognition();
-            } else {
-                console.log('浏览器不支持语音识别，将使用手动输入模式');
-                // 显示手动输入模式
-                toggleInputMode(true);
-            }
-            
-            // 显示移动端提示
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                mobileHint.style.display = 'block';
-            }
-            
-            return isSpeechSupported;
-        }
-        
-        // 初始化语音识别
-        function initializeSpeechRecognition() {
-            try {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 recognition = new SpeechRecognition();
                 recognition.continuous = false;
                 recognition.interimResults = false;
                 recognition.lang = 'en-US';
-                recognition.maxAlternatives = 1;
                 
                 recognition.onstart = function() {
-                    console.log('语音识别开始');
                     isRecognizing = true;
                     shadowingStatusDot.className = "status-dot recording";
-                    shadowingStatusText.textContent = "正在聆听...请清晰朗读英文术语";
+                    shadowingStatusText.textContent = "正在聆听...请朗读英文术语";
                     startShadowingBtn.innerHTML = '<i class="fas fa-stop-circle"></i> 停止跟读';
                 };
                 
                 recognition.onresult = function(event) {
-                    console.log('语音识别结果:', event);
-                    const transcript = event.results[0][0].transcript.trim();
+                    const transcript = event.results[0][0].transcript.toLowerCase().trim();
                     checkPronunciation(transcript);
                 };
                 
@@ -1911,43 +1416,16 @@
                     console.error('语音识别错误:', event.error);
                     isRecognizing = false;
                     shadowingStatusDot.className = "status-dot error";
-                    
-                    let errorMessage = "识别错误";
-                    switch(event.error) {
-                        case 'no-speech':
-                            errorMessage = "未检测到语音，请重试";
-                            break;
-                        case 'audio-capture':
-                            errorMessage = "未检测到麦克风，请检查麦克风设置";
-                            break;
-                        case 'not-allowed':
-                            errorMessage = "麦克风权限被拒绝，请允许使用麦克风";
-                            break;
-                        case 'network':
-                            errorMessage = "网络错误，请检查网络连接";
-                            break;
-                        default:
-                            errorMessage = "识别失败，请重试";
-                    }
-                    
-                    shadowingStatusText.textContent = errorMessage;
+                    shadowingStatusText.textContent = "识别错误，请重试";
                     startShadowingBtn.innerHTML = '<i class="fas fa-microphone"></i> 开始跟读';
                     
                     shadowingResult.className = "shadowing-result error";
-                    shadowingResultText.textContent = `语音识别失败: ${errorMessage}`;
-                    shadowingFeedback.textContent = "建议：请确保麦克风权限已开启，在安静环境下朗读";
+                    shadowingResultText.textContent = "语音识别失败，请确保麦克风权限已开启";
+                    shadowingFeedback.textContent = "建议：请使用Chrome浏览器，确保在安静环境下朗读";
                     shadowingResult.style.display = 'block';
-                    
-                    // 如果连续失败，建议切换到手动输入模式
-                    setTimeout(() => {
-                        if (!isInputMode) {
-                            toggleInputModeBtn.innerHTML = '<i class="fas fa-keyboard"></i> 切换到手动输入模式';
-                        }
-                    }, 1000);
                 };
                 
                 recognition.onend = function() {
-                    console.log('语音识别结束');
                     isRecognizing = false;
                     if (shadowingStatusDot.className !== "status-dot error") {
                         shadowingStatusDot.className = "status-dot";
@@ -1955,13 +1433,9 @@
                         startShadowingBtn.innerHTML = '<i class="fas fa-microphone"></i> 开始跟读';
                     }
                 };
-                
-                console.log('语音识别初始化成功');
-            } catch (error) {
-                console.error('语音识别初始化失败:', error);
-                isSpeechRecognitionSupported = false;
-                toggleInputMode(true);
             }
+            
+            return isSpeechSupported;
         }
         
         // 检查发音准确性
@@ -1970,7 +1444,6 @@
             
             const word = words[currentWordIndex];
             const correctText = word.english.toLowerCase().trim();
-            const userText = userTranscript.toLowerCase().trim();
             
             // 显示处理状态
             shadowingStatusDot.className = "status-dot processing";
@@ -1979,7 +1452,8 @@
             // 模拟AI分析延迟
             setTimeout(() => {
                 // 简单的发音检查逻辑
-                const similarity = calculateSimilarity(userText, correctText);
+                // 在实际应用中，这里可以连接到真正的语音识别API进行更准确的分析
+                const similarity = calculateSimilarity(userTranscript, correctText);
                 
                 if (similarity >= 0.8) {
                     // 发音正确
@@ -1999,10 +1473,10 @@
                     shadowingStatusText.textContent = "发音接近";
                     
                     shadowingResult.className = "shadowing-result incorrect";
-                    shadowingResultText.textContent = `△ 发音接近。您说: "${userTranscript}"，正确应为: "${word.english}"`;
+                    shadowingResultText.textContent = `△ 发音接近。您说: "${userTranscript}"，正确应为: "${correctText}"`;
                     
                     // 提供纠正建议
-                    const suggestions = getPronunciationSuggestions(userText, correctText);
+                    const suggestions = getPronunciationSuggestions(userTranscript, correctText);
                     shadowingFeedback.textContent = `建议：${suggestions}`;
                     
                     // 增加尝试次数
@@ -2014,10 +1488,10 @@
                     shadowingStatusText.textContent = "发音错误";
                     
                     shadowingResult.className = "shadowing-result error";
-                    shadowingResultText.textContent = `✗ 发音错误。您说: "${userTranscript}"，正确应为: "${word.english}"`;
+                    shadowingResultText.textContent = `✗ 发音错误。您说: "${userTranscript}"，正确应为: "${correctText}"`;
                     
                     // 提供纠正建议
-                    const suggestions = getPronunciationSuggestions(userText, correctText);
+                    const suggestions = getPronunciationSuggestions(userTranscript, correctText);
                     shadowingFeedback.textContent = `建议：${suggestions}`;
                     
                     // 增加尝试次数
@@ -2026,57 +1500,30 @@
                 }
                 
                 shadowingResult.style.display = 'block';
-            }, 800);
+            }, 1000);
         }
         
-        // 计算两个字符串的相似度
+        // 计算两个字符串的相似度（简单实现）
         function calculateSimilarity(str1, str2) {
-            // 如果完全相同
-            if (str1 === str2) return 1.0;
-            
             // 移除标点符号和多余空格
-            const cleanStr1 = str1.replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').toLowerCase();
-            const cleanStr2 = str2.replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').toLowerCase();
+            const cleanStr1 = str1.replace(/[^\w\s]/g, '').replace(/\s+/g, ' ');
+            const cleanStr2 = str2.replace(/[^\w\s]/g, '').replace(/\s+/g, ' ');
             
-            // 如果其中一个为空
-            if (!cleanStr1 || !cleanStr2) return 0;
+            // 如果完全相同
+            if (cleanStr1 === cleanStr2) return 1.0;
             
-            // 使用Levenshtein距离计算相似度
-            const distance = levenshteinDistance(cleanStr1, cleanStr2);
-            const maxLength = Math.max(cleanStr1.length, cleanStr2.length);
+            // 简单相似度计算：共同字符比例
+            const set1 = new Set(cleanStr1.split(''));
+            const set2 = new Set(cleanStr2.split(''));
             
-            return 1 - distance / maxLength;
-        }
-        
-        // Levenshtein距离算法
-        function levenshteinDistance(a, b) {
-            const matrix = [];
-            
-            // 初始化矩阵
-            for (let i = 0; i <= b.length; i++) {
-                matrix[i] = [i];
+            let intersection = 0;
+            for (let char of set1) {
+                if (set2.has(char)) intersection++;
             }
             
-            for (let j = 0; j <= a.length; j++) {
-                matrix[0][j] = j;
-            }
+            const union = set1.size + set2.size - intersection;
             
-            // 填充矩阵
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1, // 替换
-                            matrix[i][j - 1] + 1,     // 插入
-                            matrix[i - 1][j] + 1      // 删除
-                        );
-                    }
-                }
-            }
-            
-            return matrix[b.length][a.length];
+            return intersection / union;
         }
         
         // 获取发音建议
@@ -2103,11 +1550,6 @@
                 suggestions.push("注意'l'的发音，舌尖抵住上齿龈");
             }
             
-            // 检查重音位置
-            if (correctText.includes(' ') && !userTranscript.includes(' ')) {
-                suggestions.push("注意单词之间的空格，确保每个单词都清晰发音");
-            }
-            
             // 通用建议
             if (suggestions.length === 0) {
                 suggestions.push("请仔细听标准发音，注意重音和音节划分");
@@ -2125,8 +1567,6 @@
                     updateWordCount();
                     renderWordList();
                     renderFavoritesList();
-                    renderLibraryList();
-                    updateLibraryStats();
                 } catch (e) {
                     console.error('加载单词数据失败:', e);
                     words = [];
@@ -2139,14 +1579,11 @@
                     favoriteCategory: '',
                     practiceCount: 0,
                     correctPronunciations: 0,
-                    attemptedPronunciations: 0,
-                    lastPracticed: null
+                    attemptedPronunciations: 0
                 }));
                 saveWords();
                 renderWordList();
                 renderFavoritesList();
-                renderLibraryList();
-                updateLibraryStats();
             }
         }
         
@@ -2154,7 +1591,6 @@
         function saveWords() {
             localStorage.setItem('longlai-english-words', JSON.stringify(words));
             updateWordCount();
-            updateLibraryStats();
             showSaveNotification();
         }
         
@@ -2170,7 +1606,6 @@
         function updateWordCount() {
             const count = words.length;
             wordCountElement.textContent = `${count}词`;
-            libraryCountElement.textContent = `${count}个术语`;
             
             // 更新收藏计数
             const favoriteCount = words.filter(word => word.favorite).length;
@@ -2179,17 +1614,6 @@
             
             // 更新筛选后的计数
             updateFilteredCount();
-        }
-        
-        // 更新术语库统计
-        function updateLibraryStats() {
-            const total = words.length;
-            const favorites = words.filter(word => word.favorite).length;
-            const difficult = words.filter(word => word.difficulty === 'hard').length;
-            
-            totalWordsElement.textContent = total;
-            favoriteWordsElement.textContent = favorites;
-            difficultWordsElement.textContent = difficult;
         }
         
         // 更新筛选后的计数
@@ -2430,9 +1854,6 @@
                         <button class="btn btn-primary btn-sm learn-btn" data-id="${word.english}">
                             <i class="fas fa-play"></i>
                         </button>
-                        <button class="btn btn-primary btn-sm speak-english-btn" data-id="${word.english}">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
                         <button class="btn btn-favorite btn-sm favorite-category-btn" data-id="${word.english}">
                             <i class="fas fa-tag"></i>
                         </button>
@@ -2474,19 +1895,6 @@
                 });
             });
             
-            // 添加英文发音按钮事件监听器
-            favoritesListElement.querySelectorAll('.speak-english-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const english = this.getAttribute('data-id');
-                    const index = words.findIndex(w => w.english === english);
-                    if (index !== -1) {
-                        const word = words[index];
-                        speakText(word.english, 'en-US', 1.0);
-                    }
-                });
-            });
-            
             // 添加收藏分类按钮事件监听器
             favoritesListElement.querySelectorAll('.favorite-category-btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
@@ -2506,6 +1914,152 @@
             });
             
             updateFavoritesPracticeCount();
+        }
+        
+        // 切换收藏状态
+        function toggleFavoriteByEnglish(english) {
+            const index = words.findIndex(w => w.english === english);
+            if (index !== -1) {
+                words[index].favorite = !words[index].favorite;
+                
+                // 如果取消收藏，清除收藏分类
+                if (!words[index].favorite) {
+                    words[index].favoriteCategory = '';
+                }
+                
+                saveWords();
+                renderWordList();
+                renderFavoritesList();
+                
+                // 如果当前选中的单词，更新收藏按钮状态
+                if (currentWordIndex === index) {
+                    updateFavoriteButton();
+                }
+            }
+        }
+        
+        // 更改收藏分类
+        function changeFavoriteCategory(english) {
+            const index = words.findIndex(w => w.english === english);
+            if (index !== -1 && words[index].favorite) {
+                const currentCategory = words[index].favoriteCategory || '';
+                
+                // 选择收藏分类
+                const categories = ['发音困难', '容易混淆', '重点记忆'];
+                let newCategory = '';
+                
+                if (currentCategory === '') {
+                    newCategory = '发音困难';
+                } else if (currentCategory === '发音困难') {
+                    newCategory = '容易混淆';
+                } else if (currentCategory === '容易混淆') {
+                    newCategory = '重点记忆';
+                } else {
+                    newCategory = '';
+                }
+                
+                words[index].favoriteCategory = newCategory;
+                saveWords();
+                renderFavoritesList();
+                
+                // 如果当前选中的单词，更新显示
+                if (currentWordIndex === index) {
+                    selectWord(index, false);
+                }
+            }
+        }
+        
+        // 根据英文删除单词
+        function deleteWordByEnglish(english) {
+            if (confirm('确定要删除这个术语吗？')) {
+                const index = words.findIndex(w => w.english === english);
+                if (index !== -1) {
+                    words.splice(index, 1);
+                    saveWords();
+                    renderWordList();
+                    renderFavoritesList();
+                    
+                    // 如果删除的是当前选中的单词，清空学习区域
+                    if (currentWordIndex === index) {
+                        currentWordIndex = -1;
+                        clearCurrentWordDisplay();
+                        disableSpeechButtons();
+                        quickPronunciation.style.display = 'none';
+                        shadowingArea.style.display = 'none';
+                    } else if (currentWordIndex > index) {
+                        currentWordIndex--;
+                    }
+                }
+            }
+        }
+        
+        // 添加新单词
+        function addWord() {
+            const english = englishInput.value.trim();
+            const chinese = chineseInput.value.trim();
+            const example = exampleInput.value.trim();
+            const category = categoryInput.value;
+            
+            if (!english || !chinese) {
+                alert('请填写英文术语和中文释义！');
+                return;
+            }
+            
+            // 检查是否已存在相同的单词
+            const existingIndex = words.findIndex(w => w.english.toLowerCase() === english.toLowerCase());
+            
+            if (existingIndex >= 0) {
+                if (confirm('这个术语已经存在，要更新它吗？')) {
+                    // 更新现有单词
+                    words[existingIndex] = {
+                        ...words[existingIndex],
+                        english,
+                        chinese,
+                        category,
+                        example
+                    };
+                    saveWords();
+                    renderWordList();
+                    renderFavoritesList();
+                    
+                    // 如果更新的是当前选中的单词，刷新显示
+                    if (currentWordIndex === existingIndex) {
+                        selectWord(existingIndex, false);
+                    }
+                }
+            } else {
+                // 添加新单词
+                const newWord = {
+                    english,
+                    chinese,
+                    category,
+                    example,
+                    difficulty: "medium",
+                    favorite: false,
+                    favoriteCategory: '',
+                    practiceCount: 0,
+                    correctPronunciations: 0,
+                    attemptedPronunciations: 0
+                };
+                
+                words.push(newWord);
+                saveWords();
+                renderWordList();
+                renderFavoritesList();
+                
+                // 选择新添加的单词并切换到学习选项卡
+                const newIndex = words.length - 1;
+                selectWord(newIndex);
+                switchTab('learn-tab');
+            }
+            
+            // 清空输入框
+            englishInput.value = '';
+            chineseInput.value = '';
+            exampleInput.value = '';
+            
+            // 聚焦到英语输入框
+            englishInput.focus();
         }
         
         // 选择单词
@@ -2566,9 +2120,8 @@
             // 更新当前分类显示
             currentCategoryDisplay.textContent = word.category;
             
-            // 增加练习次数并更新最后练习时间
+            // 增加练习次数
             word.practiceCount = (word.practiceCount || 0) + 1;
-            word.lastPracticed = new Date().toISOString();
             saveWords();
             
             // 更新单词列表高亮
@@ -2590,102 +2143,11 @@
             // 重置跟读状态
             resetShadowing();
             
-            // 清空手动输入框
-            shadowingTextInput.value = '';
-            
             // 如果指定了要跳转到学习选项卡
             if (switchToLearnTab) {
                 // 切换到学习选项卡
                 switchTab('learn-tab');
             }
-        }
-        
-        // 切换输入模式
-        function toggleInputMode(forceManual = false) {
-            if (forceManual) {
-                isInputMode = true;
-            } else {
-                isInputMode = !isInputMode;
-            }
-            
-            if (isInputMode) {
-                // 切换到手动输入模式
-                shadowingInput.classList.add('active');
-                startShadowingBtn.disabled = true;
-                startShadowingBtn.innerHTML = '<i class="fas fa-keyboard"></i> 手动输入模式';
-                toggleInputModeBtn.innerHTML = '<i class="fas fa-microphone"></i> 切换到语音识别模式';
-                shadowingStatusText.textContent = "请在下方输入您听到的英文术语";
-            } else {
-                // 切换到语音识别模式
-                shadowingInput.classList.remove('active');
-                startShadowingBtn.disabled = false;
-                startShadowingBtn.innerHTML = '<i class="fas fa-microphone"></i> 开始跟读';
-                toggleInputModeBtn.innerHTML = '<i class="fas fa-keyboard"></i> 切换到手动输入模式';
-                shadowingStatusText.textContent = "点击按钮开始跟读";
-            }
-        }
-        
-        // 开始/停止跟读
-        function toggleShadowing() {
-            if (isInputMode) {
-                // 手动输入模式，检查输入
-                const userInput = shadowingTextInput.value.trim();
-                if (!userInput) {
-                    alert('请输入您听到的英文术语');
-                    return;
-                }
-                checkPronunciation(userInput);
-                return;
-            }
-            
-            // 语音识别模式
-            if (!isSpeechRecognitionSupported) {
-                alert('您的浏览器不支持语音识别功能，已自动切换到手动输入模式。');
-                toggleInputMode(true);
-                return;
-            }
-            
-            if (!recognition) {
-                try {
-                    initializeSpeechRecognition();
-                } catch (error) {
-                    console.error('语音识别初始化失败:', error);
-                    alert('语音识别初始化失败，已切换到手动输入模式。');
-                    toggleInputMode(true);
-                    return;
-                }
-            }
-            
-            if (isRecognizing) {
-                // 停止识别
-                recognition.stop();
-            } else {
-                // 开始识别
-                try {
-                    recognition.start();
-                } catch (error) {
-                    console.error('启动语音识别失败:', error);
-                    shadowingStatusDot.className = "status-dot error";
-                    shadowingStatusText.textContent = "启动失败，请重试";
-                    
-                    // 建议切换到手动输入模式
-                    setTimeout(() => {
-                        if (confirm('语音识别启动失败，是否切换到手动输入模式？')) {
-                            toggleInputMode(true);
-                        }
-                    }, 500);
-                }
-            }
-        }
-        
-        // 手动检查发音
-        function checkManualPronunciation() {
-            const userInput = shadowingTextInput.value.trim();
-            if (!userInput) {
-                alert('请输入您听到的英文术语');
-                return;
-            }
-            checkPronunciation(userInput);
         }
         
         // 更新收藏按钮状态
@@ -2707,9 +2169,8 @@
         // 重置跟读状态
         function resetShadowing() {
             shadowingStatusDot.className = "status-dot";
-            shadowingStatusText.textContent = isInputMode ? "请在下方输入您听到的英文术语" : "点击按钮开始跟读";
-            startShadowingBtn.innerHTML = isInputMode ? '<i class="fas fa-keyboard"></i> 手动输入模式' : '<i class="fas fa-microphone"></i> 开始跟读';
-            startShadowingBtn.disabled = isInputMode;
+            shadowingStatusText.textContent = "点击按钮开始跟读";
+            startShadowingBtn.innerHTML = '<i class="fas fa-microphone"></i> 开始跟读';
             shadowingResult.style.display = 'none';
             
             // 停止语音识别
@@ -2769,7 +2230,7 @@
             }
         }
         
-        // 发音函数（优化中文发音，将"/"读成"或"）
+        // 发音函数
         function speakText(text, lang, rate = 1.0) {
             if (!isSpeechSupported) {
                 alert('您的浏览器不支持语音合成功能，请使用最新版的Chrome、Edge或Safari浏览器。');
@@ -2779,14 +2240,7 @@
             // 停止当前正在进行的语音
             speechSynthesis.cancel();
             
-            let speakText = text;
-            
-            // 如果是中文发音，将"/"替换为"或"
-            if (lang.startsWith('zh')) {
-                speakText = text.replace(/\s*\/\s*/g, '或');
-            }
-            
-            const utterance = new SpeechSynthesisUtterance(speakText);
+            const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = lang;
             utterance.rate = rate;
             
@@ -2888,6 +2342,221 @@
             
             const word = words[currentWordIndex];
             speakText(word.english, 'en-US', 0.7);
+        }
+        
+        // 开始/停止跟读
+        function toggleShadowing() {
+            if (!isSpeechRecognitionSupported) {
+                alert('您的浏览器不支持语音识别功能，无法使用跟读功能。请使用最新版Chrome浏览器。');
+                return;
+            }
+            
+            if (currentWordIndex === -1) {
+                alert('请先选择一个术语！');
+                return;
+            }
+            
+            if (isRecognizing) {
+                // 停止识别
+                recognition.stop();
+            } else {
+                // 开始识别
+                recognition.start();
+            }
+        }
+        
+        // 练习当前分类的单词
+        function practiceCurrentCategory() {
+            let wordsToPractice = getFilteredWords();
+            
+            if (wordsToPractice.length === 0) {
+                alert('当前分类没有术语可练习！');
+                return;
+            }
+            
+            if (!isSpeechSupported) {
+                alert('您的浏览器不支持语音合成功能，无法使用练习功能。');
+                return;
+            }
+            
+            if (isPracticing) {
+                alert('练习正在进行中，请等待完成！');
+                return;
+            }
+            
+            isPracticing = true;
+            practiceCategoryBtn.disabled = true;
+            practiceCategoryBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 练习中...';
+            
+            let index = 0;
+            
+            function speakNextWord() {
+                if (index >= wordsToPractice.length) {
+                    isPracticing = false;
+                    practiceCategoryBtn.disabled = false;
+                    practiceCategoryBtn.innerHTML = '<i class="fas fa-play-circle"></i> 练习';
+                    alert('当前分类练习完成！');
+                    return;
+                }
+                
+                const word = wordsToPractice[index];
+                // 找到单词在原始数组中的索引
+                const originalIndex = words.findIndex(w => w.english === word.english && w.chinese === word.chinese);
+                selectWord(originalIndex, false);
+                
+                // 先说英语，然后说中文
+                const utteranceEnglish = new SpeechSynthesisUtterance(word.english);
+                utteranceEnglish.lang = 'en-US';
+                utteranceEnglish.rate = 0.8;
+                
+                // 选择英文语音
+                const englishVoice = voices.find(voice => voice.lang.startsWith('en'));
+                if (englishVoice) {
+                    utteranceEnglish.voice = englishVoice;
+                } else if (selectedVoice) {
+                    utteranceEnglish.voice = selectedVoice;
+                }
+                
+                utteranceEnglish.onend = function() {
+                    // 等待1秒后说中文
+                    setTimeout(() => {
+                        const utteranceChinese = new SpeechSynthesisUtterance(word.chinese);
+                        utteranceChinese.lang = 'zh-CN';
+                        utteranceChinese.rate = 1.0;
+                        
+                        // 选择中文语音
+                        const chineseVoice = voices.find(voice => voice.lang.startsWith('zh'));
+                        if (chineseVoice) {
+                            utteranceChinese.voice = chineseVoice;
+                        } else if (selectedVoice) {
+                            utteranceChinese.voice = selectedVoice;
+                        }
+                        
+                        utteranceChinese.onend = function() {
+                            // 等待1.5秒后说下一个单词
+                            index++;
+                            setTimeout(speakNextWord, 1500);
+                        };
+                        
+                        utteranceChinese.onerror = function() {
+                            // 中文发音失败，继续下一个单词
+                            index++;
+                            setTimeout(speakNextWord, 1500);
+                        };
+                        
+                        speechSynthesis.speak(utteranceChinese);
+                    }, 1000);
+                };
+                
+                utteranceEnglish.onerror = function() {
+                    // 英文发音失败，继续下一个单词
+                    index++;
+                    setTimeout(speakNextWord, 1000);
+                };
+                
+                speechSynthesis.speak(utteranceEnglish);
+            }
+            
+            speakNextWord();
+        }
+        
+        // 练习收藏夹单词
+        function practiceFavorites() {
+            let favoriteWords = getFilteredFavorites();
+            
+            if (favoriteWords.length === 0) {
+                alert('收藏夹中没有术语可练习！');
+                return;
+            }
+            
+            if (!isSpeechSupported) {
+                alert('您的浏览器不支持语音合成功能，无法使用练习功能。');
+                return;
+            }
+            
+            if (isPracticing) {
+                alert('练习正在进行中，请等待完成！');
+                return;
+            }
+            
+            isPracticing = true;
+            practiceFavoritesBtn.disabled = true;
+            practiceAllFavoritesBtn.disabled = true;
+            practiceFavoritesBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 练习中...';
+            practiceAllFavoritesBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 练习中...';
+            
+            let index = 0;
+            
+            function speakNextWord() {
+                if (index >= favoriteWords.length) {
+                    isPracticing = false;
+                    practiceFavoritesBtn.disabled = false;
+                    practiceAllFavoritesBtn.disabled = false;
+                    practiceFavoritesBtn.innerHTML = '<i class="fas fa-play-circle"></i> 练习收藏';
+                    practiceAllFavoritesBtn.innerHTML = '<i class="fas fa-play-circle"></i> 练习全部';
+                    alert('收藏夹练习完成！');
+                    return;
+                }
+                
+                const word = favoriteWords[index];
+                // 找到单词在原始数组中的索引
+                const originalIndex = words.findIndex(w => w.english === word.english && w.chinese === word.chinese);
+                selectWord(originalIndex, false);
+                
+                // 先说英语，然后说中文
+                const utteranceEnglish = new SpeechSynthesisUtterance(word.english);
+                utteranceEnglish.lang = 'en-US';
+                utteranceEnglish.rate = 0.7; // 收藏夹单词慢速练习
+                
+                // 选择英文语音
+                const englishVoice = voices.find(voice => voice.lang.startsWith('en'));
+                if (englishVoice) {
+                    utteranceEnglish.voice = englishVoice;
+                } else if (selectedVoice) {
+                    utteranceEnglish.voice = selectedVoice;
+                }
+                
+                utteranceEnglish.onend = function() {
+                    // 等待1.5秒后说中文
+                    setTimeout(() => {
+                        const utteranceChinese = new SpeechSynthesisUtterance(word.chinese);
+                        utteranceChinese.lang = 'zh-CN';
+                        utteranceChinese.rate = 1.0;
+                        
+                        // 选择中文语音
+                        const chineseVoice = voices.find(voice => voice.lang.startsWith('zh'));
+                        if (chineseVoice) {
+                            utteranceChinese.voice = chineseVoice;
+                        } else if (selectedVoice) {
+                            utteranceChinese.voice = selectedVoice;
+                        }
+                        
+                        utteranceChinese.onend = function() {
+                            // 等待2秒后说下一个单词（收藏夹单词需要更多时间）
+                            index++;
+                            setTimeout(speakNextWord, 2000);
+                        };
+                        
+                        utteranceChinese.onerror = function() {
+                            // 中文发音失败，继续下一个单词
+                            index++;
+                            setTimeout(speakNextWord, 2000);
+                        };
+                        
+                        speechSynthesis.speak(utteranceChinese);
+                    }, 1500);
+                };
+                
+                utteranceEnglish.onerror = function() {
+                    // 英文发音失败，继续下一个单词
+                    index++;
+                    setTimeout(speakNextWord, 1500);
+                };
+                
+                speechSynthesis.speak(utteranceEnglish);
+            }
+            
+            speakNextWord();
         }
         
         // 加载语音列表
@@ -2992,6 +2661,8 @@
         // 事件监听器
         addWordBtn.addEventListener('click', addWord);
         practiceCategoryBtn.addEventListener('click', practiceCurrentCategory);
+        practiceFavoritesBtn.addEventListener('click', practiceFavorites);
+        practiceAllFavoritesBtn.addEventListener('click', practiceFavorites);
         speakEnglishBtn.addEventListener('click', speakEnglish);
         speakChineseBtn.addEventListener('click', speakChinese);
         speakSlowlyBtn.addEventListener('click', speakSlowly);
@@ -3003,15 +2674,6 @@
         toggleFavoriteBtn.addEventListener('click', function() {
             if (currentWordIndex >= 0) {
                 toggleFavoriteByEnglish(words[currentWordIndex].english);
-            }
-        });
-        toggleInputModeBtn.addEventListener('click', function() {
-            toggleInputMode();
-        });
-        checkPronunciationBtn.addEventListener('click', checkManualPronunciation);
-        shadowingTextInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkManualPronunciation();
             }
         });
         
@@ -3100,7 +2762,6 @@
             
             console.log('隆莱英语助手已初始化，已加载', words.length, '个术语');
             console.log('语音识别支持:', isSpeechRecognitionSupported ? '是' : '否');
-            console.log('移动设备:', /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? '是' : '否');
         }
         
         // 页面加载完成后初始化应用
@@ -3121,131 +2782,13 @@
                     isPracticing = false;
                     practiceCategoryBtn.disabled = false;
                     practiceCategoryBtn.innerHTML = '<i class="fas fa-play-circle"></i> 练习';
+                    practiceFavoritesBtn.disabled = false;
+                    practiceFavoritesBtn.innerHTML = '<i class="fas fa-play-circle"></i> 练习收藏';
+                    practiceAllFavoritesBtn.disabled = false;
+                    practiceAllFavoritesBtn.innerHTML = '<i class="fas fa-play-circle"></i> 练习全部';
                 }
             }
         });
-        
-        // 由于时间关系，以下是简化的其他函数实现
-        // 实际应用中，这些函数应该完整实现
-        
-        function toggleFavoriteByEnglish(english) {
-            const index = words.findIndex(w => w.english === english);
-            if (index !== -1) {
-                words[index].favorite = !words[index].favorite;
-                saveWords();
-                renderWordList();
-                renderFavoritesList();
-                if (currentWordIndex === index) {
-                    updateFavoriteButton();
-                }
-            }
-        }
-        
-        function changeFavoriteCategory(english) {
-            // 实现收藏分类更改
-        }
-        
-        function clearFavorites() {
-            if (confirm('确定要清空收藏夹吗？')) {
-                words.forEach(word => word.favorite = false);
-                saveWords();
-                renderWordList();
-                renderFavoritesList();
-            }
-        }
-        
-        function exportFavorites() {
-            const favoriteWords = words.filter(word => word.favorite);
-            if (favoriteWords.length === 0) {
-                alert('收藏夹为空，无法导出！');
-                return;
-            }
-            const dataStr = JSON.stringify(favoriteWords, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `收藏夹_${new Date().toISOString().slice(0, 10)}.json`;
-            link.click();
-        }
-        
-        function deleteWordByEnglish(english) {
-            if (confirm('确定要删除这个术语吗？')) {
-                const index = words.findIndex(w => w.english === english);
-                if (index !== -1) {
-                    words.splice(index, 1);
-                    saveWords();
-                    renderWordList();
-                    renderFavoritesList();
-                    if (currentWordIndex === index) {
-                        currentWordIndex = -1;
-                        clearCurrentWordDisplay();
-                        disableSpeechButtons();
-                        quickPronunciation.style.display = 'none';
-                        shadowingArea.style.display = 'none';
-                    }
-                }
-            }
-        }
-        
-        function addWord() {
-            const english = englishInput.value.trim();
-            const chinese = chineseInput.value.trim();
-            const example = exampleInput.value.trim();
-            const category = categoryInput.value;
-            const difficulty = difficultyInput.value;
-            
-            if (!english || !chinese) {
-                alert('请填写英文术语和中文释义！');
-                return;
-            }
-            
-            const newWord = {
-                english,
-                chinese,
-                category,
-                example,
-                difficulty,
-                favorite: false,
-                favoriteCategory: '',
-                practiceCount: 0,
-                correctPronunciations: 0,
-                attemptedPronunciations: 0,
-                lastPracticed: null
-            };
-            
-            words.push(newWord);
-            saveWords();
-            renderWordList();
-            renderFavoritesList();
-            
-            const newIndex = words.length - 1;
-            selectWord(newIndex);
-            switchTab('learn-tab');
-            
-            englishInput.value = '';
-            chineseInput.value = '';
-            exampleInput.value = '';
-            englishInput.focus();
-        }
-        
-        function practiceCurrentCategory() {
-            alert('练习功能开发中...');
-        }
-        
-        // 简化的其他函数
-        function renderLibraryList() {
-            // 简化实现
-            libraryListElement.innerHTML = words.length > 0 ? 
-                `<div class="empty-state"><i class="fas fa-check-circle"></i><p>已加载 ${words.length} 个术语</p></div>` : 
-                emptyLibraryMessage.outerHTML;
-        }
-        
-        function updateLibraryStats() {
-            totalWordsElement.textContent = words.length;
-            favoriteWordsElement.textContent = words.filter(w => w.favorite).length;
-            difficultWordsElement.textContent = words.filter(w => w.difficulty === 'hard').length;
-        }
     </script>
 </body>
 </html>
