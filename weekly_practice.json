@@ -101,6 +101,14 @@
       "example": "Training is completed.",
       "exampleChinese": "培训已完成。"
     },
+     {
+      "type": "word",
+      "english": "release ",
+      "chinese": "放行",
+      "category": "物料放行",
+      "example": "Establishing a system to release or reject raw materials, intermediates, packaging and labelling materials.",
+      "exampleChinese": "建立放行或拒绝原材料、中间体、包装材料和标签材料的制度；"
+    },
     {
       "type": "word",
       "english": "sterile",
