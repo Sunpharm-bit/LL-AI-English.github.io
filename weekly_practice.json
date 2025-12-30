@@ -7,43 +7,43 @@
   "items": [
     {
       "type": "word",
-      "english": "quality management",
-      "chinese": "质量管理",
+      "english": "Insect",
+      "chinese": "昆虫",
       "category": "质量体系",
-      "example": "Quality Management System is in place.",
-      "exampleChinese": "质量管理体系已建立。"
+      "example": "Insect killer lamps will be checked daily for proper operation. And the collection trays will be cleaned once daily. Record the inspection in the Insect Killer Lamp Inspection Record. ",
+      "exampleChinese": "每天检查灭虫灯是否运行正常，每天清理一次接收盘，在《灭虫灯检查记录》中记录相应检查情况。"
     },
     {
       "type": "word",
-      "english": "quality inspection",
-      "chinese": "质量检验",
+      "english": " Clean room(Area)",
+      "chinese": "洁净室（区）",
       "category": "质量控制",
-      "example": "Quality inspection passed.",
-      "exampleChinese": "质量检验已通过。"
+      "example": "During production, the number of personnel in the clean area is limited to 8.",
+      "exampleChinese": "洁净区生产期间限流8人。"
     },
     {
       "type": "word",
-      "english": "process",
-      "chinese": "工序",
+      "english": "disinfection",
+      "chinese": "消毒",
       "category": "工艺控制",
-      "example": "This is a key process step.",
-      "exampleChinese": "这是一个关键工序步骤。"
+      "example": "Methods for removing disinfectants after use: ① Removal by natural volatilization. ② Removal by rinsing.",
+      "exampleChinese": "消毒剂使用后的清除方法：①能通过自然挥发除去的，使自然挥发去除。②通过清洗除去。"
     },
     {
       "type": "word",
-      "english": "contamination",
-      "chinese": "污染",
-      "category": "污染控制",
-      "example": "No contamination risk found.",
-      "exampleChinese": "未发现污染风险。"
+      "english": "Training",
+      "chinese": "培训",
+      "category": "质量体系",
+      "example": "The individual training files of active employees shall be retained permanently. The individual training files of terminated employees and annual training plans shall be retained for a minimum period of five years.",
+      "exampleChinese": "在职人员个人培训档案永久保存，离职人员的个人培训档案及年度培训计划保存期限至少为五年。"
     },
     {
       "type": "word",
-      "english": "cross-contamination",
-      "chinese": "交叉污染",
-      "category": "污染控制",
-      "example": "Prevent cross-contamination between products.",
-      "exampleChinese": "防止产品间交叉污染。"
+      "english": "release",
+      "chinese": "放行",
+      "category": "质量体系",
+      "example": "The release for API and CDMO finished product is approved by Quality Authorizer or Alternate Authorizer or QA Manager.",
+      "exampleChinese": "API 及CDMO 成品由质量授权人或转授权人或QA经理进行批准放行。"
     },
     {
       "type": "word",
